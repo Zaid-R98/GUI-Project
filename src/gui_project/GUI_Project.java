@@ -18,6 +18,7 @@ public class GUI_Project {
         // TODO code application logic here
         System.out.println("This is a test..");
         System.out.println("Test 2");
+        System.out.println("Third test");
     }
     
 }
