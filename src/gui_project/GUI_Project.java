@@ -22,6 +22,7 @@ public class GUI_Project {
         System.out.print("This is Dhriti can yall see me");
         System.out.println("One more test");
         System.out.println("Wow this is amazing. Thanks Azadan");
+        System.out.println("Zaid told me say, \"Abdullah added this\" and then we all have to pull (god knows what that means)");
     }
     
 }
