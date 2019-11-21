@@ -23,6 +23,7 @@ public class GUI_Project {
         System.out.println("One more test");
         System.out.println("Wow this is amazing. Thanks Azadan");
         System.out.println("Zaid told me say, \"Abdullah added this\" and then we all have to pull (god knows what that means)");
+        System.out.println("Github is a bloody racist");
     }
     
 }
