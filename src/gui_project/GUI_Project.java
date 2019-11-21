@@ -19,6 +19,7 @@ public class GUI_Project {
         System.out.println("This is a test..");
         System.out.println("Test 2");
         System.out.println("Third test");
+        System.out.print("This is Dhriti can yall see me");
     }
     
 }
