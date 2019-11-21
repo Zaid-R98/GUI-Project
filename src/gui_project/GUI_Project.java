@@ -20,6 +20,7 @@ public class GUI_Project {
         System.out.println("Test 2");
         System.out.println("Third test");
         System.out.print("This is Dhriti can yall see me");
+        System.out.println("One more test");
     }
     
 }
