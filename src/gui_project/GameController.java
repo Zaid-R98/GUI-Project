@@ -29,10 +29,10 @@ public class GameController {
 
         int currentCellWidth = gameModel.getCurrentCellWidth();
         
-        int numOfCellsRows = gridViewWidth /currentCellWidth;
-        int numOfCellsCols = gridViewHeight / currentCellWidth;
+        int numOfCellsColumns = gridViewWidth /currentCellWidth;
+        int numOfCellsRows = gridViewHeight / currentCellWidth;
         
-        Cell[][] portionOfCellsVisible = new Cell[numOfCellsCols][numOfCellsRows];
+        Cell[][] portionOfCellsVisible = new Cell[numOfCellsRows][numOfCellsColumns];
         
         //Initialize visible portion
         for (int i = 0; i < portionOfCellsVisible.length; ++i) {

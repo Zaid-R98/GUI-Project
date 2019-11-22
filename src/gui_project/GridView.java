@@ -16,8 +16,6 @@ import javax.swing.JComponent;
  * @author azada
  */
 public class GridView extends JComponent{
-
-    
     private Cell[][] portionOfCellsVisible;
 
     @Override
