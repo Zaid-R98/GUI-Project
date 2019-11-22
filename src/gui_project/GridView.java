@@ -34,10 +34,10 @@ public class GridView extends JComponent{
   }
     
     private void selectCellByPoint(Point point) {
-         for (int i = 0; i < portionOfCellsVisibleAsRects.length; ++i) {
-            for (int j = 0; j < portionOfCellsVisibleAsRects[i].length; ++j) { 
+         for (int i = 0; i < portionOfCellsVisible.length; ++i) {
+            for (int j = 0; j < portionOfCellsVisible[i].length; ++j) { 
                 //Find and set color of cell
-                if (portionOfCellsVisibleAsRects[i][j].contains(point)){
+                if (portionOfCellsVisible[i][j].getRect().contains(point)){
                     if (portionOfCellsVisible[i][j].getIsAlive()) {
                          portionOfCellsVisible[i][j].setIsAlive(false);
                     }
@@ -79,5 +79,7 @@ public class GridView extends JComponent{
     public void setPortionOfCellsVisible(Cell[][] portionOfCellsVisible) {
         this.portionOfCellsVisible = portionOfCellsVisible;
     }
+    
+ 
     
 }
