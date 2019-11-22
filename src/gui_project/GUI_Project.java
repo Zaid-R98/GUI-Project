@@ -7,6 +7,7 @@ package gui_project;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.GridLayout;
 import java.awt.event.ActionListener;
@@ -22,20 +23,13 @@ import javax.swing.JPanel;
  * @author Zaid
  */
 public class GUI_Project {
-
+    
     public static void main(String[] args) {
         EventQueue.invokeLater(new Runnable() {
             @Override
-            public void run() {
-            GameFrame frame = new GameFrame();
-                frame.setVisible(true);
-                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);   
-                frame.setTitle("Game Of Life");
-                frame.setSize(500, 500);
-                frame.getContentPane().setBackground(Color.LIGHT_GRAY);
-            
-                
-                
+            public void run() {  
+                GameFrame frame = new GameFrame();
+                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             }
         });
     }
@@ -45,24 +39,45 @@ public class GUI_Project {
 
 class GameFrame extends JFrame{
 
+    private GameController gameController;
+    private GridView gridView;
+    private GameModel gameModel;
+    
     public GameFrame() {
-        setBackground(Color.LIGHT_GRAY);
-         JPanel boxes = new JPanel();
-         boxes.setLayout(new GridLayout(25,25));
-         boxes.setBackground(Color.DARK_GRAY);
-      
+ //       setBackground(Color.LIGHT_GRAY);
+//         JPanel boxes = new JPanel();
+//         boxes.setLayout(new GridLayout(25,25));
+//         boxes.setBackground(Color.DARK_GRAY);
+//      
+//         
+//         for (int i = 0; i < 500; i++) {
+//             JLabel grids = new JLabel(" ");
+//             grids.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
+//             boxes.add(grids);
+//        }
+//         
+//         
+//         
+//         add(boxes, BorderLayout.CENTER);
          
-         for (int i = 0; i < 500; i++) {
-             JLabel grids = new JLabel(" ");
-             grids.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
-             boxes.add(grids);
-        }
-         
-         
-         
-         add(boxes, BorderLayout.CENTER);
+
+        setTitle("Game Of Life");
+        setPreferredSize(new Dimension(500, 500));
+        getContentPane().setBackground(Color.LIGHT_GRAY);
+
+        gridView = new GridView();
+        gameModel = new GameModel();
+
+        add(gridView, BorderLayout.CENTER);
+        setVisible(true);
+        
          GamePanels controllers = new GamePanels();
          add(controllers, BorderLayout.SOUTH);
+         
+         pack();
+
+         gameController = new GameController(gameModel, gridView);
+
     }
      
 }
