@@ -23,6 +23,7 @@ import javax.swing.JPanel;
 public class GUI_Project {
 
     public static void main(String[] args) {
+<<<<<<< HEAD
         EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
@@ -38,6 +39,18 @@ public class GUI_Project {
             }
         });
         
+=======
+        // TODO code application logic here
+        System.out.println("This is a test..");
+        System.out.println("Test 2");
+        System.out.println("Third test");
+        System.out.print("This is Dhriti can yall see me");
+        System.out.println("One more test");
+        System.out.println("Wow this is amazing. Thanks Azadan");
+        System.out.println("Zaid told me say, \"Abdullah added this\" and then we all have to pull (god knows what that means)");
+        System.out.println("Github is a bloody racist");
+        //trial push azadan
+>>>>>>> d7c7a1dabb989f40400da9dd0a0133da377dfdcd
     }
     
 }
