@@ -9,6 +9,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.GridLayout;
+import java.awt.event.ActionListener;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -67,23 +68,58 @@ class GameFrame extends JFrame{
 }
 
 class GamePanels extends JPanel{
+    
+      
+      private JButton Next;
+      private JButton Start;
+      private JComboBox shape;
+      private JComboBox speed;
+      private JLabel generation;
+      private int gen = 0;
+
+      public  void setGen(int currentGen) {
+        this.gen = currentGen;}
+      
     public GamePanels(){
         
         setBackground(Color.LIGHT_GRAY);
+        
         String[] Shapes = {"Glider", "R-Pentomino","Small Exploder", "Small spaceship", "Tumbler"};
-        add(new JComboBox(Shapes));
+        shape = new JComboBox(Shapes);
+        add(shape);
         
-        add(new JButton("Next"));
-        add(new JButton("Start"));
+        Next = new JButton("Next");
+        add(Next);
         
-        String[] Speed = {"Slow", "Normal","Fast"};
-        add(new JComboBox(Speed));
+        Start = new JButton("Start");
+        add(Start);
         
-        JLabel generation = new JLabel();
-        generation.setText("Generation: ");
+        String[] Speeds = {"Slow", "Normal","Fast"};
+        speed = new JComboBox(Speeds);
+        add(speed);
+        
+        generation = new JLabel();
+        generation.setText("Generation: "+gen);
         add(generation);
 
-        }
+        
+  }
+    
+    public void addShapeComboBoxListener(ActionListener ShapeAction){
+        shape.addActionListener(ShapeAction);
+    }
+    
+    public void addNextButtonListener(ActionListener NextAction){
+        Next.addActionListener(NextAction);
+    }
+    
+    public void addStartButtonListener(ActionListener StartAction){
+        Start.addActionListener(StartAction);
+    }
+    
+    public void addSpeedComboBoxListener(ActionListener SpeedAction){
+        speed.addActionListener(SpeedAction);
+    }
 
 
 }
