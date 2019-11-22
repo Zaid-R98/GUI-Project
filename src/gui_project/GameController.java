@@ -33,34 +33,33 @@ public class GameController {
         int numOfCellsCols = gridViewHeight / currentCellWidth;
         
         Cell[][] portionOfCellsVisible = new Cell[numOfCellsCols][numOfCellsRows];
-        Rectangle2D.Double[][] portionOfCellsVisibleAsRects = new Rectangle2D.Double[numOfCellsCols][numOfCellsRows];
         
         //Initialize visible portion
-        for (int i = 0; i < portionOfCellsVisibleAsRects.length; ++i) {
+        for (int i = 0; i < portionOfCellsVisible.length; ++i) {
             int currentYPos = i * currentCellWidth;
-            for (int j = 0; j < portionOfCellsVisibleAsRects[i].length; ++j) {
+            for (int j = 0; j < portionOfCellsVisible[i].length; ++j) {
                 int currentXPos = j * currentCellWidth;
                 
+                //Get cell status by top-left corner,  offset by current position
+                boolean currentAliveStatus
+                        = gameModel.getAliveStatusAt(
+                                i + gameModel.getTopLeftCellVisible().x,
+                                j + gameModel.getTopLeftCellVisible().y);
+                
                 //Create a rectangle with correct xpos, ypos
-                portionOfCellsVisibleAsRects[i][j] = new Rectangle2D.Double(
+                portionOfCellsVisible[i][j] = new Cell(currentAliveStatus);
+                    
+                //Set Rect information
+                portionOfCellsVisible[i][j].setRect(
                         currentXPos, 
                         currentYPos, 
                         currentCellWidth,
                         currentCellWidth);
-                
-                //Get cell status by top-left corner,  offset by current position
-                boolean currentAliveStatus = 
-                        gameModel.getAliveStatusAt(
-                                i + gameModel.getTopLeftCellVisible().x, 
-                                j + gameModel.getTopLeftCellVisible().y);
-                
-                portionOfCellsVisible[i][j] = new Cell(currentAliveStatus);      
             }
         }
         
         //Update Grid View information
         gridView.setPortionOfCellsVisible(portionOfCellsVisible);
-        gridView.setPortionOfCellsVisibleAsRects(portionOfCellsVisibleAsRects);
         //Request Grid View to refresh UI
         gridView.repaint();
         

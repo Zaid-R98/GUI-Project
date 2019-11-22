@@ -5,12 +5,15 @@
  */
 package gui_project;
 
+import java.awt.geom.Rectangle2D;
+
 /**
  *
  * @author azada
  */
 public class Cell {
     private boolean isAlive = false;
+    private Rectangle2D.Double rect = new Rectangle2D.Double();
     
     public Cell(){ }
     
@@ -20,6 +23,15 @@ public class Cell {
     
     public boolean getIsAlive() {
         return isAlive;
+    }
+    
+    public void setRect(double x, double y, double w, double h){
+        rect.setRect(x, y, w, h);
+    }
+    
+    //For drawing purposes
+    public Rectangle2D getRect(){
+        return rect;
     }
     
     //added this comment to check for connectivity- zaid
