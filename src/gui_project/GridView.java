@@ -80,4 +80,6 @@ public class GridView extends JComponent{
         this.portionOfCellsVisible = portionOfCellsVisible;
     }
     
+ 
+    
 }
