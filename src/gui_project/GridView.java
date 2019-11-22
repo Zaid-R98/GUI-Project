@@ -21,7 +21,6 @@ import javax.swing.JComponent;
 public class GridView extends JComponent{
     
     private Cell[][] portionOfCellsVisible;
-    private Rectangle2D.Double[][] portionOfCellsVisibleAsRects;
 
     public GridView() {
        addMouseListener(new MouseAdapter() {
@@ -56,8 +55,8 @@ public class GridView extends JComponent{
     @Override
     protected void paintComponent(Graphics g) {
         Graphics2D g2d = (Graphics2D) g;
-        for (int i = 0; i < portionOfCellsVisibleAsRects.length; ++i) {
-            for (int j = 0; j < portionOfCellsVisibleAsRects[i].length; ++j) { 
+        for (int i = 0; i < portionOfCellsVisible.length; ++i) {
+            for (int j = 0; j < portionOfCellsVisible[i].length; ++j) { 
                 //Find and set color of cell
                 if (portionOfCellsVisible[i][j].getIsAlive()){
                     g2d.setColor(Color.YELLOW);
@@ -66,11 +65,11 @@ public class GridView extends JComponent{
                     g2d.setColor(Color.DARK_GRAY);
                 }
                 //Draw Cell
-                g2d.fill(portionOfCellsVisibleAsRects[i][j]);
+                g2d.fill(portionOfCellsVisible[i][j].getRect());
                 
                 //Draw border
                 g2d.setColor(Color.LIGHT_GRAY);
-                g2d.draw(portionOfCellsVisibleAsRects[i][j]);              
+                g2d.draw(portionOfCellsVisible[i][j].getRect());              
             }
         }     
     }
@@ -79,10 +78,6 @@ public class GridView extends JComponent{
     
     public void setPortionOfCellsVisible(Cell[][] portionOfCellsVisible) {
         this.portionOfCellsVisible = portionOfCellsVisible;
-    }
-
-    public void setPortionOfCellsVisibleAsRects(Rectangle2D.Double[][] portionOfCellsVisibleAsRects) {
-        this.portionOfCellsVisibleAsRects = portionOfCellsVisibleAsRects;
     }
     
 }
