@@ -44,21 +44,6 @@ class GameFrame extends JFrame{
     private GameModel gameModel;
     
     public GameFrame() {
- //       setBackground(Color.LIGHT_GRAY);
-//         JPanel boxes = new JPanel();
-//         boxes.setLayout(new GridLayout(25,25));
-//         boxes.setBackground(Color.DARK_GRAY);
-//      
-//         
-//         for (int i = 0; i < 500; i++) {
-//             JLabel grids = new JLabel(" ");
-//             grids.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
-//             boxes.add(grids);
-//        }
-//         
-//         
-//         
-//         add(boxes, BorderLayout.CENTER);
          
 
         setTitle("Game Of Life");
@@ -85,11 +70,11 @@ class GameFrame extends JFrame{
 class GamePanels extends JPanel{
     
       
-      private JButton Next;
-      private JButton Start;
-      private JComboBox shape;
-      private JComboBox speed;
-      private JLabel generation;
+      private final JButton Next;
+      private final JButton Start;
+      private final JComboBox shape;
+      private final JComboBox speed;
+      private final JLabel generation;
       private int gen = 0;
 
       public  void setGen(int currentGen) {
