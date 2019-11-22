@@ -22,4 +22,6 @@ public class Cell {
         return isAlive;
     }
     
+    //added this comment to check for connectivity- zaid
+    
 }
