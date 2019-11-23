@@ -30,6 +30,7 @@ public class GUI_Project {
             public void run() {  
                 GameFrame frame = new GameFrame();
                 frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                frame.setLocationRelativeTo(null);
             }
         });
     }
@@ -61,7 +62,7 @@ class GameFrame extends JFrame{
          
          pack();
 
-         gameController = new GameController(gameModel, gridView);
+         gameController = new GameController(gameModel, gridView,  controllers);
 
     }
      
@@ -69,7 +70,6 @@ class GameFrame extends JFrame{
 
 class GamePanels extends JPanel{
     
-      
       private final JButton Next;
       private final JButton Start;
       private final JComboBox shape;
