@@ -25,8 +25,10 @@ public class PanelView extends JPanel{
       private final JLabel generation;
       private int gen;
 
-      public  void setGen(int currentgen) {
-        this.gen = currentgen;}
+      public  void setGen(int currentgen) 
+      {
+          this.gen = currentgen;
+      }
       
     public PanelView(){
         
@@ -48,10 +50,9 @@ public class PanelView extends JPanel{
         
         generation = new JLabel();
         setGenLabel(0);
-        add(generation);
-
-        
-  }
+        add(generation);    
+    }
+    
     public void setGenLabel(int gen)
     { 
         generation.setText("Generation: "+ gen);
@@ -72,6 +73,4 @@ public class PanelView extends JPanel{
     public void addSpeedComboBoxListener(ActionListener SpeedAction){
         speed.addActionListener(SpeedAction);
     }
-
-
 }
