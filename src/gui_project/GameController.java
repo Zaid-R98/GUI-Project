@@ -17,9 +17,9 @@ public class GameController {
 
     private GameModel gameModel;
     private GridView gridView;
-    private GamePanels panel; 
+    private PanelView panel; 
     
-    public GameController(GameModel gameModel, GridView gridView, GamePanels panel) {
+    public GameController(GameModel gameModel, GridView gridView, PanelView panel) {
         this.gameModel = gameModel;
         this.gridView = gridView;
         this.panel = panel;
@@ -28,6 +28,8 @@ public class GameController {
             @Override
             public void actionPerformed(ActionEvent e)
             {
+                int temp = gameModel.incrementGen();
+                panel.setGenLabel(temp);
                 CellLife();
             }
         });
