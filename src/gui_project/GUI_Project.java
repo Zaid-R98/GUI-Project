@@ -37,7 +37,6 @@ public class GUI_Project {
     
 }
 
-
 class GameFrame extends JFrame{
 
     private GameController gameController;
@@ -64,7 +63,6 @@ class GameFrame extends JFrame{
 
          gameController = new GameController(gameModel, gridView,  controllers);
 
-    }
-     
+    }    
 }
 
