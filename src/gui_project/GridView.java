@@ -79,6 +79,10 @@ public class GridView extends JComponent{
     public void setPortionOfCellsVisible(Cell[][] portionOfCellsVisible) {
         this.portionOfCellsVisible = portionOfCellsVisible;
     }
+
+    public Cell[][] getPortionOfCellsVisible() {
+        return portionOfCellsVisible;
+    }
     
  
     
