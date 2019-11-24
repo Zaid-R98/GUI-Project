@@ -75,10 +75,101 @@ public class GameController {
         
     }
     
-    //this is the most basic algorithm, please dont kill me xD
+   
     private void CellLife()
     {
+        int lifestatus;//check whether alive or not (the cell)
+        int neisum=0;
         Cell next[][] = new Cell[gridView.getPortionOfCellsVisible().length][gridView.getPortionOfCellsVisible()[0].length];
+        for(int i = 0; i < gridView.getPortionOfCellsVisible().length; ++i){
+            for(int j = 0; j < gridView.getPortionOfCellsVisible()[i].length; ++j)
+            {
+               if(gameModel.getAliveStatusAt(i, j))
+                   lifestatus=1;
+                else
+                   lifestatus=0;
+              
+               neisum=countneighbors(gridView.getPortionOfCellsVisible(),i,j);
+              
+               if(lifestatus==0 && neisum==3)
+               {
+                   next[i][j].setIsAlive(true);
+               }
+               else if ( lifestatus==1 && (neisum<2 || neisum>3))
+               {
+                   next[i][j].setIsAlive(false);
+               }
+               else
+                   if(lifestatus==1)
+                       next[i][j].setIsAlive(true);
+                   else
+                      next[i][j].setIsAlive(false);
+            }
+            }
+        
+        for(int i=0;i<next.length;++i)
+        {
+            for(int j=0;j<next[i].length;++j)
+            {
+               gridView.getPortionOfCellsVisible()[i][j]=next[i][j];
+            }
+        }
+        
+    }
+    
+    
+    private int countneighbors(Cell array2d[][], int x , int y)
+    {
+        boolean ctr;
+        int sum=0;
+        
+        //8 additions are as follows-
+        //taking care of all permutations. Returning an error though. Please spot the silly mistake.
+        for(int i=-1;i<=1;++i)
+        {
+            if(array2d[x+i][y]!=null)
+            {
+                 ctr=array2d[x+i][y].getIsAlive();
+                 if(ctr)
+                 {
+                    sum+=1;
+                 }
+            }   
+        }
+        
+        for(int i=-1;i<=1;++i)
+        {
+            if(array2d[x+i][y]!=null)
+            {
+                 ctr=array2d[x+i][y-1].getIsAlive();
+                 if(ctr)
+                 {
+                    sum+=1;
+                 }
+            }   
+        }
+        
+         for(int i=-1;i<=1;++i)
+        {
+            if(array2d[x+i][y]!=null)
+            {
+                 ctr=array2d[x+i][y+1].getIsAlive();
+                 if(ctr)
+                 {
+                    sum+=1;
+                 }
+            }   
+        }
+        
+        
+      
+       
+      return sum;
+    }//func
+}//class
+    
+//Abdullah's code-    
+        /*Cell next[][] = new Cell[gridView.getPortionOfCellsVisible().length][gridView.getPortionOfCellsVisible()[0].length];
         for(int i = 0; i < gridView.getPortionOfCellsVisible().length; ++i)
             for(int j = 0; j < gridView.getPortionOfCellsVisible()[i].length; ++j)
             {
@@ -166,5 +257,4 @@ public class GameController {
             }
         gridView.setPortionOfCellsVisible(next);
         gridView.repaint();
-    }    
-}
+    }    */
