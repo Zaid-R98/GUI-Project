@@ -33,6 +33,10 @@ public class Cell {
         rect.setRect(x, y, w, h);
     }
     
+    public void setRect(Rectangle2D.Double rect){
+        this.rect.setRect(rect);
+    }
+    
     //For drawing purposes
     public Rectangle2D getRect(){
         return rect;

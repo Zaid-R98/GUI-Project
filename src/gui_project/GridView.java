@@ -31,7 +31,7 @@ public class GridView extends JComponent{
             }         
         });
     
-  }
+   }
     
     private void selectCellByPoint(Point point) {
          for (int i = 0; i < portionOfCellsVisible.length; ++i) {
@@ -50,7 +50,6 @@ public class GridView extends JComponent{
                 
             }
     }}
-
 
     @Override
     protected void paintComponent(Graphics g) {
@@ -73,17 +72,12 @@ public class GridView extends JComponent{
             }
         }     
     }
-    
-      
-    
+
     public void setPortionOfCellsVisible(Cell[][] portionOfCellsVisible) {
         this.portionOfCellsVisible = portionOfCellsVisible;
     }
 
     public Cell[][] getPortionOfCellsVisible() {
         return portionOfCellsVisible;
-    }
-    
- 
-    
+    }    
 }

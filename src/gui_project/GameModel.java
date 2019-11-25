@@ -22,6 +22,8 @@ public class GameModel {
     //Changes based on Scrolling
     private Point topLeftCellVisible = new Point(TOTAL_GRID_SIZE/3, TOTAL_GRID_SIZE/3);
     
+    private int generation=0; 
+    
     public GameModel(){
         //Initialize grid to dead cells
         for (int i = 0; i < cellGrid.length; ++i){
@@ -44,4 +46,8 @@ public class GameModel {
     public int getCurrentCellWidth() {
         return currentCellWidth;
     }
+    
+    public int incrementGen()
+    {  generation += 1;
+        return generation;}
 }
