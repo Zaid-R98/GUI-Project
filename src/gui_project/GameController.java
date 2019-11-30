@@ -47,7 +47,6 @@ public class GameController {
         int gridViewWidth = gridView.getWidth();
         int gridViewHeight = gridView.getHeight();
 
-        int currentCellWidth = gameModel.getCurrentCellWidth();
         
         int numOfCellsColumns = gridViewWidth /currentCellWidth;
         int numOfCellsRows = gridViewHeight / currentCellWidth;
@@ -144,17 +143,7 @@ public class GameController {
                 
                 //Change based on new Mode setting
                 if (gameModel.getIsAutomaticMode()){  
-                    gameSpeedTimer = new Timer(gameModel.getNumericDelayOfGameSpeed(), 
-                            new ActionListener() {
-                                @Override
-                                public void actionPerformed(ActionEvent e) {
-                                    performOneCellGeneration();
-                                    updateGridViewDisplay();
-                                }
-                            });
-                    
                     panel.updateViewForAutomaticMode(true);
-                    gameSpeedTimer.start();
                 }
                 else{
                     panel.updateViewForAutomaticMode(false);

@@ -18,8 +18,7 @@ public class GameModel {
     
     //Full game grid
     private Cell[][] cellGrid = new Cell[TOTAL_GRID_SIZE][TOTAL_GRID_SIZE];
-    //Changes based on Zoom level
-    private int currentCellWidth = 20;
+    private ZoomLevel zoomLevel = ZoomLevel.MEDIUM;
     //Changes based on Scrolling
     private Point topLeftCellVisible = new Point(TOTAL_GRID_SIZE/3, TOTAL_GRID_SIZE/3);
     private int generation=0;
@@ -47,11 +46,15 @@ public class GameModel {
     public Point getTopLeftCellVisible() {
         return topLeftCellVisible;
     }
-
     
-    public int getCurrentCellWidth() {
-        return currentCellWidth;
+    public ZoomLevel getZoomLevel() {
+        return zoomLevel;
     }
+
+    public void setZoomLevel(ZoomLevel zoomLevel) {
+        this.zoomLevel = zoomLevel;
+    }
+
     
     public int incrementGen()
     {  generation += 1;
@@ -138,8 +141,24 @@ public class GameModel {
                 return 700;
         }
     }
+    
+    public int getCurrentCellWidthFromZoomLevel() {
+        switch(zoomLevel){
+            case SMALL:
+                return 30;
+            case MEDIUM:
+                return 20;
+            default:
+                //if LARGE
+                return 10;
+        }
+    }
 }
 
 enum GameSpeed{
     SLOW, NORMAL, FAST
+}
+
+enum ZoomLevel{
+    SMALL, MEDIUM, BIG
 }
