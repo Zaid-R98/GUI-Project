@@ -53,6 +53,17 @@ public class PanelView extends JPanel{
         add(generation);    
     }
     
+    public void updateViewForAutomaticMode(boolean isAutomaticMode){
+        if (isAutomaticMode){
+            Next.setEnabled(false);
+            Start.setText("Stop");
+        }
+        else{
+            Next.setEnabled(true);
+            Start.setText("Start");
+        }
+    }
+    
     public void setGenLabel(int gen)
     { 
         generation.setText("Generation: "+ gen);

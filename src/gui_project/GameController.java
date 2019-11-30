@@ -7,7 +7,10 @@ package gui_project;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.geom.Rectangle2D;
+import javax.swing.Timer;
 
 /**
  *
@@ -19,21 +22,106 @@ public class GameController {
     private GridView gridView;
     private PanelView panel; 
     
+    private Timer gameSpeedTimer = null;
+    
     public GameController(GameModel gameModel, GridView gridView, PanelView panel) {
         this.gameModel = gameModel;
         this.gridView = gridView;
         this.panel = panel;
+        
+        //Display initial grid
         updateGridViewDisplay();
+        
+<<<<<<< HEAD
+=======
+        //Add all listeners     
+>>>>>>> bbba96b2403eaf401a47059789719a23425c277c
         panel.addNextButtonListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e)
             {
-                int temp = gameModel.incrementGen();
-                panel.setGenLabel(temp);
-                CellLife();
+<<<<<<< HEAD
+               NextStep();
             }
         });
+        
+    
+       panel.addStartButtonListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+           
+                
+           
+=======
+                performOneCellGeneration();
+                updateGridViewDisplay();
+            }
+        });
+        
+        gridView.addGridClickingListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                for (int i = 0; i < gridView.getPortionOfCellsVisible().length; ++i) {
+                    for (int j = 0; j < gridView.getPortionOfCellsVisible()[i].length; ++j) { 
+                        //Find and set color of cell
+                        if (gridView.getPortionOfCellsVisible()[i][j].getRect().contains(e.getPoint())){
+                            //Find location of cell in original model from visible portion
+                            int offsetRow = gameModel.getTopLeftCellVisible().y + i;
+                            int offsetCol = gameModel.getTopLeftCellVisible().x + j;
+                            
+                            //Flip alive status in model
+                            gameModel.setAliveStatusAt(offsetRow, offsetCol, !gameModel.getAliveStatusAt(offsetRow, offsetCol));  
+                        }          
+                    }
+                }
+                //Update grid with new model status
+                updateGridViewDisplay();
+            }         
+        });
+    
+        panel.addStartButtonListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                
+                //Flip Automatic mode in model
+                gameModel.setIsAutomaticMode(!gameModel.getIsAutomaticMode());
+                
+                if (gameModel.getIsAutomaticMode()){
+                    if (gameSpeedTimer != null){
+                        gameSpeedTimer.stop();
+                    }
+                    
+                    gameSpeedTimer = new Timer(gameModel.getNumericDelayOfGameSpeed(), 
+                            new ActionListener() {
+                                @Override
+                                public void actionPerformed(ActionEvent e) {
+                                    performOneCellGeneration();
+                                    updateGridViewDisplay();
+                                }
+                            });
+                    
+                    panel.updateViewForAutomaticMode(true);
+                    gameSpeedTimer.start();
+                }
+                else{
+                    gameSpeedTimer.stop();
+                    panel.updateViewForAutomaticMode(false);
+                }
+               
+>>>>>>> bbba96b2403eaf401a47059789719a23425c277c
+            }
+        });
+    
     }
+    
+    
+    public void NextStep(){
+        int temp = gameModel.incrementGen();
+        panel.setGenLabel(temp);
+        CellLife();
+    }
+    
+    
     
     private void updateGridViewDisplay(){
         int gridViewWidth = gridView.getWidth();
@@ -41,10 +129,10 @@ public class GameController {
 
         int currentCellWidth = gameModel.getCurrentCellWidth();
         
-        int numOfCellsRows = gridViewWidth /currentCellWidth;
-        int numOfCellsCols = gridViewHeight / currentCellWidth;
+        int numOfCellsColumns = gridViewWidth /currentCellWidth;
+        int numOfCellsRows = gridViewHeight / currentCellWidth;
         
-        Cell[][] portionOfCellsVisible = new Cell[numOfCellsCols][numOfCellsRows];
+        Cell[][] portionOfCellsVisible = new Cell[numOfCellsRows][numOfCellsColumns];
         
         //Initialize visible portion
         for (int i = 0; i < portionOfCellsVisible.length; ++i) {
@@ -76,65 +164,17 @@ public class GameController {
         gridView.repaint();
         
     }
-   
-    //Abdullah's code V2
-    private void CellLife()
-    {
-        Cell next[][] = new Cell[gridView.getPortionOfCellsVisible().length][gridView.getPortionOfCellsVisible()[0].length];
-        for(int i = 0; i < gridView.getPortionOfCellsVisible().length; ++i)
-            for(int j = 0; j < gridView.getPortionOfCellsVisible()[i].length; ++j)
-            {
-                int top, left, bottom, right, alivecells;
-                top = left = bottom = right = alivecells = 0;
-                if(i < gridView.getPortionOfCellsVisible().length -1)
-                {
-                    if(j < gridView.getPortionOfCellsVisible()[i].length -1)
-                    {
-                        alivecells+=((gridView.getPortionOfCellsVisible()[i+1][j+1].getIsAlive())? 1:0);
-                        right = ((gridView.getPortionOfCellsVisible()[i][j+1].getIsAlive())? 1:0);
-                    }
-                    if(j > 0)
-                    {
-                        alivecells+=((gridView.getPortionOfCellsVisible()[i+1][j-1].getIsAlive())? 1:0);
-                        left = ((gridView.getPortionOfCellsVisible()[i][j-1].getIsAlive())? 1:0);
-                    }
-                    bottom = ((gridView.getPortionOfCellsVisible()[i+1][j].getIsAlive())? 1:0);
-                }
-                if(i > 0)
-                {
-                    if(j < gridView.getPortionOfCellsVisible()[i].length -1 )
-                    {
-                        alivecells+=((gridView.getPortionOfCellsVisible()[i-1][j+1].getIsAlive())? 1:0);
-                        right = ((gridView.getPortionOfCellsVisible()[i][j+1].getIsAlive())? 1:0);
-                    }
-                    if(j > 0)
-                    {
-                        alivecells+=((gridView.getPortionOfCellsVisible()[i-1][j-1].getIsAlive())? 1:0);
-                        left = ((gridView.getPortionOfCellsVisible()[i][j-1].getIsAlive())? 1:0);
-                    }
-                    top = ((gridView.getPortionOfCellsVisible()[i-1][j].getIsAlive())? 1:0);
-                }
-                alivecells+= top + left + bottom + right;
-                if(gridView.getPortionOfCellsVisible()[i][j].getIsAlive() && (alivecells <= 1 || alivecells >= 4))
-                {
-                    next[i][j] = new Cell(false);
-                    next[i][j].setRect((Rectangle2D.Double)gridView.getPortionOfCellsVisible()[i][j].getRect());
-                }
-                else if(!gridView.getPortionOfCellsVisible()[i][j].getIsAlive() && alivecells == 3)
-                {
-                    next[i][j] = new Cell(true);
-                    next[i][j].setRect((Rectangle2D.Double)gridView.getPortionOfCellsVisible()[i][j].getRect());
-                }
-                else
-                {
-                    next[i][j] = new Cell(gridView.getPortionOfCellsVisible()[i][j].getIsAlive());
-                    next[i][j].setRect((Rectangle2D.Double)gridView.getPortionOfCellsVisible()[i][j].getRect());
-                }
-            }
-        gridView.setPortionOfCellsVisible(next);
-        gridView.repaint();
+    
+    private void performOneCellGeneration(){
+        int temp = gameModel.incrementGen();
+        panel.setGenLabel(temp);
+        gameModel.performCellLifeCalculation();
     }
+   
+    
 }
+
+
 
 
 
