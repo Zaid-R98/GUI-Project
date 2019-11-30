@@ -9,6 +9,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
+import java.awt.event.ComponentListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -27,6 +28,10 @@ public class GridView extends JComponent{
     
     public void addGridClickingListener(MouseListener listener){
         addMouseListener(listener);
+    }
+    
+    public void addComponentResizedListener(ComponentListener listener){
+        addComponentListener(listener);
     }
 
     @Override
@@ -58,4 +63,5 @@ public class GridView extends JComponent{
     public Cell[][] getPortionOfCellsVisible() {
         return portionOfCellsVisible;
     }    
+    
 }
