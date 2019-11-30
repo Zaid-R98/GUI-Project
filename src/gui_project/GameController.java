@@ -12,6 +12,7 @@ import java.awt.event.ComponentEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.geom.Rectangle2D;
+import javax.swing.JComboBox;
 import javax.swing.Timer;
 
 /**
@@ -47,7 +48,7 @@ public class GameController {
         int gridViewWidth = gridView.getWidth();
         int gridViewHeight = gridView.getHeight();
 
-        int currentCellWidth = gameModel.getCurrentCellWidth();
+        int currentCellWidth = gameModel.getCurrentCellWidthFromZoomLevel();
         
         int numOfCellsColumns = gridViewWidth /currentCellWidth;
         int numOfCellsRows = gridViewHeight / currentCellWidth;
@@ -154,6 +155,22 @@ public class GameController {
             }
         });
         
+        panel.addZoomComboBoxListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String selectedOption = (String) ((JComboBox) e.getSource()).getSelectedItem();
+                if (selectedOption.equals("Small")){
+                    gameModel.setZoomLevel(ZoomLevel.SMALL);
+                }
+                else if (selectedOption.equals("Medium")){
+                    gameModel.setZoomLevel(ZoomLevel.MEDIUM);
+                }
+                else{
+                    gameModel.setZoomLevel(ZoomLevel.BIG);
+                }
+                updateGridViewDisplay();
+            }
+        });
         
     }
    

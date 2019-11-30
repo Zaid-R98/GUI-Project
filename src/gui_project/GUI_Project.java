@@ -47,7 +47,7 @@ class GameFrame extends JFrame{
          
 
         setTitle("Game Of Life");
-        setPreferredSize(new Dimension(500, 500));
+        setPreferredSize(new Dimension(600, 500));
         getContentPane().setBackground(Color.LIGHT_GRAY);
 
         gridView = new GridView();

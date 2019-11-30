@@ -49,11 +49,16 @@ public class PanelView extends JPanel{
         speed = new JComboBox(Speeds);
         add(speed);
         
-        
+        String[] zoomLevels = {"Small", "Medium", "Big"};
+        zoom = new JComboBox(zoomLevels);
+        zoom.setEditable(false);
+        zoom.setSelectedItem("Medium");
+        add(zoom);   
         
         generation = new JLabel();
         setGenLabel(0);
         add(generation);    
+        
     }
     
     public void updateViewForAutomaticMode(boolean isAutomaticMode){
@@ -86,5 +91,9 @@ public class PanelView extends JPanel{
     
     public void addSpeedComboBoxListener(ActionListener SpeedAction){
         speed.addActionListener(SpeedAction);
+    }
+    
+    public void addZoomComboBoxListener(ActionListener listener){
+        zoom.addActionListener(listener);
     }
 }
