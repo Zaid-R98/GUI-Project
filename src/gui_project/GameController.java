@@ -41,21 +41,12 @@ public class GameController {
             public void actionPerformed(ActionEvent e)
             {
 
-               NextStep();
+               performOneCellGeneration();
+               updateGridViewDisplay();
             }
         });
         
     
-       panel.addStartButtonListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent ae) {
-           
-                
-          
-                performOneCellGeneration();
-                updateGridViewDisplay();
-            }
-        });
         
         gridView.addGridClickingListener(new MouseAdapter() {
             @Override
@@ -112,12 +103,7 @@ public class GameController {
     
     }
     
-    
-    public void NextStep(){
-        int temp = gameModel.incrementGen();
-        panel.setGenLabel(temp);
-      //  CellLife();
-    }
+   
     
     
     

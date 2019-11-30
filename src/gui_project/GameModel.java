@@ -123,12 +123,12 @@ public class GameModel {
     public int getNumericDelayOfGameSpeed(){
         switch (gameSpeed) {
             case SLOW:
-                return 1000;
-            case NORMAL:
-                return 500;
+                return 2000;
+            case FAST:
+                return 200;
             default:
-                //if FAST
-                return 250;
+                //if NORMAL
+                return 700;
         }
     }
 }
