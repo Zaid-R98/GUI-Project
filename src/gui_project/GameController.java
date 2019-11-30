@@ -161,16 +161,12 @@ public class GameController {
                String speed = (String) combo.getSelectedItem();
                
                 if (speed.equals("Slow")) {
-                    System.out.println("Slow");
-                    gameModel.setGameSpeed("SLOW");
+                   gameModel.setGameSpeed("SLOW");
                 }
                 else if (speed.equals("Normal")) {
-                    System.out.println("Normal");
-                    gameModel.setGameSpeed("NORMAL");
                           
                 }
                 else if (speed.equals("Fast")) {
-                    System.out.println("Fast");
                     gameModel.setGameSpeed("FAST");
                 }
             }
