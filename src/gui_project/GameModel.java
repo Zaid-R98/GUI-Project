@@ -75,61 +75,93 @@ public class GameModel {
         this.isAutomaticMode = isAutomaticMode;
     
     }
-        
-    //Abdullah's code V2
+    
+    public int sizeMod(int x) {
+        if(x < 0)
+            return TOTAL_GRID_SIZE - 1;
+        return x % TOTAL_GRID_SIZE;
+    }
+    
+    //Abdullah's code V3
     public void performCellLifeCalculation()
     {
         Cell nextVersionOfCellGrid[][] = new Cell[TOTAL_GRID_SIZE][TOTAL_GRID_SIZE];
         for(int i = 0; i < cellGrid.length; ++i){
             for(int j = 0; j < cellGrid[i].length; ++j)
             {
-                int top, left, bottom, right, alivecells;
-                top = left = bottom = right = alivecells = 0;
-                if(i < cellGrid.length -1)
-                {
-                    if(j < cellGrid[i].length -1)
-                    {
-                        alivecells+=((cellGrid[i+1][j+1].getIsAlive())? 1:0);
-                        right = ((cellGrid[i][j+1].getIsAlive())? 1:0);
-                    }
-                    if(j > 0)
-                    {
-                        alivecells+=((cellGrid[i+1][j-1].getIsAlive())? 1:0);
-                        left = ((cellGrid[i][j-1].getIsAlive())? 1:0);
-                    }
-                    bottom = ((cellGrid[i+1][j].getIsAlive())? 1:0);
-                }
-                if(i > 0)
-                {
-                    if(j < cellGrid[i].length -1 )
-                    {
-                        alivecells+=((cellGrid[i-1][j+1].getIsAlive())? 1:0);
-                        right = ((cellGrid[i][j+1].getIsAlive())? 1:0);
-                    }
-                    if(j > 0)
-                    {
-                        alivecells+=((cellGrid[i-1][j-1].getIsAlive())? 1:0);
-                        left = ((cellGrid[i][j-1].getIsAlive())? 1:0);
-                    }
-                    top = ((cellGrid[i-1][j].getIsAlive())? 1:0);
-                }
-                alivecells+= top + left + bottom + right;
+                int alivecells = 0;
+                //counting if the cell and all other cells around it are alive
+                for(int x = -1; x <= 1; ++x)
+                    for(int y = -1; y <=1; ++y)
+                        alivecells+=((cellGrid[sizeMod(i+x)][sizeMod(j+y)].getIsAlive())? 1:0);
+                //we dont need to check if main cell is alive, so remove it from the alivecells
+                alivecells-=((cellGrid[i][j].getIsAlive())? 1:0);
+                
                 if(cellGrid[i][j].getIsAlive() && (alivecells <= 1 || alivecells >= 4))
-                {
                     nextVersionOfCellGrid[i][j] = new Cell(false);
-                }
                 else if(!cellGrid[i][j].getIsAlive() && alivecells == 3)
-                {
                     nextVersionOfCellGrid[i][j] = new Cell(true);
-                }
                 else
-                {
                     nextVersionOfCellGrid[i][j] = new Cell(cellGrid[i][j].getIsAlive());
-                }
             }
         }
         cellGrid = nextVersionOfCellGrid;
     }
+    
+    //Abdullah's code V2
+//    public void performCellLifeCalculation()
+//    {
+//        Cell nextVersionOfCellGrid[][] = new Cell[TOTAL_GRID_SIZE][TOTAL_GRID_SIZE];
+//        for(int i = 0; i < cellGrid.length; ++i){
+//            for(int j = 0; j < cellGrid[i].length; ++j)
+//            {
+//                int top, left, bottom, right, alivecells;
+//                top = left = bottom = right = alivecells = 0;
+//                if(i < cellGrid.length -1)
+//                {
+//                    if(j < cellGrid[i].length -1)
+//                    {
+//                        alivecells+=((cellGrid[i+1][j+1].getIsAlive())? 1:0);
+//                        right = ((cellGrid[i][j+1].getIsAlive())? 1:0);
+//                    }
+//                    if(j > 0)
+//                    {
+//                        alivecells+=((cellGrid[i+1][j-1].getIsAlive())? 1:0);
+//                        left = ((cellGrid[i][j-1].getIsAlive())? 1:0);
+//                    }
+//                    bottom = ((cellGrid[i+1][j].getIsAlive())? 1:0);
+//                }
+//                if(i > 0)
+//                {
+//                    if(j < cellGrid[i].length -1 )
+//                    {
+//                        alivecells+=((cellGrid[i-1][j+1].getIsAlive())? 1:0);
+//                        right = ((cellGrid[i][j+1].getIsAlive())? 1:0);
+//                    }
+//                    if(j > 0)
+//                    {
+//                        alivecells+=((cellGrid[i-1][j-1].getIsAlive())? 1:0);
+//                        left = ((cellGrid[i][j-1].getIsAlive())? 1:0);
+//                    }
+//                    top = ((cellGrid[i-1][j].getIsAlive())? 1:0);
+//                }
+//                alivecells+= top + left + bottom + right;
+//                if(cellGrid[i][j].getIsAlive() && (alivecells <= 1 || alivecells >= 4))
+//                {
+//                    nextVersionOfCellGrid[i][j] = new Cell(false);
+//                }
+//                else if(!cellGrid[i][j].getIsAlive() && alivecells == 3)
+//                {
+//                    nextVersionOfCellGrid[i][j] = new Cell(true);
+//                }
+//                else
+//                {
+//                    nextVersionOfCellGrid[i][j] = new Cell(cellGrid[i][j].getIsAlive());
+//                }
+//            }
+//        }
+//        cellGrid = nextVersionOfCellGrid;
+//    }
     
     public int getNumericDelayOfGameSpeed(){
         switch (gameSpeed) {
