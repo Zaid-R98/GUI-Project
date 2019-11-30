@@ -11,7 +11,7 @@ import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.geom.Rectangle2D;
+import javax.swing.JComboBox;
 import javax.swing.Timer;
 
 /**
@@ -160,6 +160,28 @@ public class GameController {
                     panel.updateViewForAutomaticMode(false);
                 }
                
+            }
+        });
+        
+        panel.addSpeedComboBoxListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+               JComboBox combo = (JComboBox) ae.getSource();
+               String speed = (String) combo.getSelectedItem();
+               
+                if (speed.equals("Slow")) {
+                    System.out.println("Slow");
+                    gameModel.setGameSpeed("SLOW");
+                }
+                else if (speed.equals("Normal")) {
+                    System.out.println("Normal");
+                    gameModel.setGameSpeed("NORMAL");
+                          
+                }
+                else if (speed.equals("Fast")) {
+                    System.out.println("Fast");
+                    gameModel.setGameSpeed("FAST");
+                }
             }
         });
     }
