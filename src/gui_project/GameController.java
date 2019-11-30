@@ -7,6 +7,8 @@ package gui_project;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.geom.Rectangle2D;
@@ -32,68 +34,9 @@ public class GameController {
         //Display initial grid
         updateGridViewDisplay();
         
-        //Add all listeners     
-        panel.addNextButtonListener(new ActionListener(){
-            @Override
-            public void actionPerformed(ActionEvent e)
-            {
-                performOneCellGeneration();
-                updateGridViewDisplay();
-            }
-        });
-        
-        gridView.addGridClickingListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                for (int i = 0; i < gridView.getPortionOfCellsVisible().length; ++i) {
-                    for (int j = 0; j < gridView.getPortionOfCellsVisible()[i].length; ++j) { 
-                        //Find and set color of cell
-                        if (gridView.getPortionOfCellsVisible()[i][j].getRect().contains(e.getPoint())){
-                            //Find location of cell in original model from visible portion
-                            int offsetRow = gameModel.getTopLeftCellVisible().y + i;
-                            int offsetCol = gameModel.getTopLeftCellVisible().x + j;
-                            
-                            //Flip alive status in model
-                            gameModel.setAliveStatusAt(offsetRow, offsetCol, !gameModel.getAliveStatusAt(offsetRow, offsetCol));  
-                        }          
-                    }
-                }
-                //Update grid with new model status
-                updateGridViewDisplay();
-            }         
-        });
-    
-        panel.addStartButtonListener(new ActionListener(){
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                
-                //Flip Automatic mode in model
-                gameModel.setIsAutomaticMode(!gameModel.getIsAutomaticMode());
-                
-                if (gameModel.getIsAutomaticMode()){
-                    if (gameSpeedTimer != null){
-                        gameSpeedTimer.stop();
-                    }
-                    
-                    gameSpeedTimer = new Timer(gameModel.getNumericDelayOfGameSpeed(), 
-                            new ActionListener() {
-                                @Override
-                                public void actionPerformed(ActionEvent e) {
-                                    performOneCellGeneration();
-                                    updateGridViewDisplay();
-                                }
-                            });
-                    
-                    panel.updateViewForAutomaticMode(true);
-                    gameSpeedTimer.start();
-                }
-                else{
-                    gameSpeedTimer.stop();
-                    panel.updateViewForAutomaticMode(false);
-                }
-               
-            }
-        });
+        //Add all listeners       
+        initializeGridViewListeners();
+        initializePanelViewListeners();
     }
     
     private void updateGridViewDisplay(){
@@ -142,6 +85,79 @@ public class GameController {
         int temp = gameModel.incrementGen();
         panel.setGenLabel(temp);
         gameModel.performCellLifeCalculation();
+    }
+    
+    private void initializeGridViewListeners(){
+        gridView.addGridClickingListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                for (int i = 0; i < gridView.getPortionOfCellsVisible().length; ++i) {
+                    for (int j = 0; j < gridView.getPortionOfCellsVisible()[i].length; ++j) { 
+                        //Find and set color of cell
+                        if (gridView.getPortionOfCellsVisible()[i][j].getRect().contains(e.getPoint())){
+                            //Find location of cell in original model from visible portion
+                            int offsetRow = gameModel.getTopLeftCellVisible().y + i;
+                            int offsetCol = gameModel.getTopLeftCellVisible().x + j;
+                            
+                            //Flip alive status in model
+                            gameModel.setAliveStatusAt(offsetRow, offsetCol, !gameModel.getAliveStatusAt(offsetRow, offsetCol));  
+                        }          
+                    }
+                }
+                //Update grid with new model status
+                updateGridViewDisplay();
+            }         
+        });
+        
+        gridView.addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentResized(ComponentEvent e) {
+                updateGridViewDisplay();
+            }
+        });
+    }
+    
+    private void initializePanelViewListeners(){
+        panel.addNextButtonListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                performOneCellGeneration();
+                updateGridViewDisplay();
+            }
+        });
+        
+        panel.addStartButtonListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e) {        
+                //Flip Automatic Mode in model
+                gameModel.setIsAutomaticMode(!gameModel.getIsAutomaticMode());
+                
+                //Always stop existing timer before making changes
+                if (gameSpeedTimer != null){
+                    gameSpeedTimer.stop();
+                }
+                
+                //Change based on new Mode setting
+                if (gameModel.getIsAutomaticMode()){  
+                    gameSpeedTimer = new Timer(gameModel.getNumericDelayOfGameSpeed(), 
+                            new ActionListener() {
+                                @Override
+                                public void actionPerformed(ActionEvent e) {
+                                    performOneCellGeneration();
+                                    updateGridViewDisplay();
+                                }
+                            });
+                    
+                    panel.updateViewForAutomaticMode(true);
+                    gameSpeedTimer.start();
+                }
+                else{
+                    panel.updateViewForAutomaticMode(false);
+                }
+               
+            }
+        });
     }
    
     
