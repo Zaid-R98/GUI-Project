@@ -149,17 +149,8 @@ public class GameController {
                 
                 //Change based on new Mode setting
                 if (gameModel.getIsAutomaticMode()){  
-                    gameSpeedTimer = new Timer(gameModel.getNumericDelayOfGameSpeed(), 
-                            new ActionListener() {
-                                @Override
-                                public void actionPerformed(ActionEvent e) {
-                                    performOneCellGeneration();
-                                    updateGridViewDisplay();
-                                }
-                            });
-                    
+                    setupTimerForAutomaticMode();
                     panel.updateViewForAutomaticMode(true);
-                    gameSpeedTimer.start();
                 }
                 else{
                     panel.updateViewForAutomaticMode(false);
@@ -167,8 +158,21 @@ public class GameController {
                
             }
         });
+        
+        
     }
    
+    private void setupTimerForAutomaticMode(){
+        gameSpeedTimer = new Timer(gameModel.getNumericDelayOfGameSpeed(),
+                new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                performOneCellGeneration();
+                updateGridViewDisplay();
+            }
+        });
+        gameSpeedTimer.start();
+    }
     
 }
 

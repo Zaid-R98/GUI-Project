@@ -22,6 +22,7 @@ public class PanelView extends JPanel{
       private final JButton Start;
       private final JComboBox shape;
       private final JComboBox speed;
+      private final JComboBox zoom;
       private final JLabel generation;
       private int gen;
 
@@ -47,6 +48,8 @@ public class PanelView extends JPanel{
         String[] Speeds = {"Slow", "Normal","Fast"};
         speed = new JComboBox(Speeds);
         add(speed);
+        
+        
         
         generation = new JLabel();
         setGenLabel(0);
