@@ -11,10 +11,6 @@ import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-<<<<<<< HEAD
-=======
-import java.awt.geom.Rectangle2D;
->>>>>>> ef73be8dde6195ec636ae62c6251426e6fef4918
 import javax.swing.JComboBox;
 import javax.swing.Timer;
 
@@ -158,7 +154,6 @@ public class GameController {
             }
         });
         
-<<<<<<< HEAD
         panel.addSpeedComboBoxListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
@@ -180,7 +175,6 @@ public class GameController {
                 }
             }
         });
-=======
         panel.addZoomComboBoxListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -198,7 +192,6 @@ public class GameController {
             }
         });
         
->>>>>>> ef73be8dde6195ec636ae62c6251426e6fef4918
     }
    
     private void setupTimerForAutomaticMode(){
