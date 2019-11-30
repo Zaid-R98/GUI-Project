@@ -158,8 +158,10 @@ public class GameController {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String selectedOption = (String) ((JComboBox) e.getSource()).getSelectedItem();
+                //Stop the timer before making chnages
                 if(gameSpeedTimer != null)
                     gameSpeedTimer.stop();
+                
                 if (selectedOption.equals("Slow")){
                     gameModel.setGameSpeed(GameSpeed.SLOW);
                 }
@@ -169,7 +171,10 @@ public class GameController {
                 else{
                     gameModel.setGameSpeed(GameSpeed.FAST);
                 }
-                setupTimerForAutomaticMode();
+                
+                //if start hasn't been pressed, we will not start timer
+                if(gameModel.getIsAutomaticMode())
+                    setupTimerForAutomaticMode();
             }
         });
         
