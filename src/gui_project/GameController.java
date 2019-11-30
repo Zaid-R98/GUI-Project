@@ -32,9 +32,7 @@ public class GameController {
         //Display initial grid
         updateGridViewDisplay();
         
-<<<<<<< HEAD
         //Add all listeners     
->>>>>>> bbba96b2403eaf401a47059789719a23425c277c
 
         //Add all listeners     
 
@@ -42,6 +40,7 @@ public class GameController {
             @Override
             public void actionPerformed(ActionEvent e)
             {
+
                NextStep();
             }
         });
