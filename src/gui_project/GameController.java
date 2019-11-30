@@ -33,6 +33,19 @@ public class GameController {
                 CellLife();
             }
         });
+        panel.addStartButtonListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                new Timer(50, new ActionListener() {
+                    public void actionPerformed(ActionEvent e){
+                        int temp = gameModel.incrementGen();
+                        panel.setGenLabel(temp);
+                        CellLife();                        
+                    }
+                }).start();
+            }
+        });
     }
     
     private void updateGridViewDisplay(){
