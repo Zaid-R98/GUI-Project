@@ -11,6 +11,10 @@ import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+<<<<<<< HEAD
+=======
+import java.awt.geom.Rectangle2D;
+>>>>>>> ef73be8dde6195ec636ae62c6251426e6fef4918
 import javax.swing.JComboBox;
 import javax.swing.Timer;
 
@@ -47,6 +51,7 @@ public class GameController {
         int gridViewWidth = gridView.getWidth();
         int gridViewHeight = gridView.getHeight();
 
+        int currentCellWidth = gameModel.getCurrentCellWidthFromZoomLevel();
         
         int numOfCellsColumns = gridViewWidth /currentCellWidth;
         int numOfCellsRows = gridViewHeight / currentCellWidth;
@@ -143,6 +148,7 @@ public class GameController {
                 
                 //Change based on new Mode setting
                 if (gameModel.getIsAutomaticMode()){  
+                    setupTimerForAutomaticMode();
                     panel.updateViewForAutomaticMode(true);
                 }
                 else{
@@ -152,6 +158,7 @@ public class GameController {
             }
         });
         
+<<<<<<< HEAD
         panel.addSpeedComboBoxListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
@@ -173,8 +180,38 @@ public class GameController {
                 }
             }
         });
+=======
+        panel.addZoomComboBoxListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String selectedOption = (String) ((JComboBox) e.getSource()).getSelectedItem();
+                if (selectedOption.equals("Small")){
+                    gameModel.setZoomLevel(ZoomLevel.SMALL);
+                }
+                else if (selectedOption.equals("Medium")){
+                    gameModel.setZoomLevel(ZoomLevel.MEDIUM);
+                }
+                else{
+                    gameModel.setZoomLevel(ZoomLevel.BIG);
+                }
+                updateGridViewDisplay();
+            }
+        });
+        
+>>>>>>> ef73be8dde6195ec636ae62c6251426e6fef4918
     }
    
+    private void setupTimerForAutomaticMode(){
+        gameSpeedTimer = new Timer(gameModel.getNumericDelayOfGameSpeed(),
+                new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                performOneCellGeneration();
+                updateGridViewDisplay();
+            }
+        });
+        gameSpeedTimer.start();
+    }
     
 }
 
