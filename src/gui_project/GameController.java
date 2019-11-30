@@ -164,6 +164,7 @@ public class GameController {
                    gameModel.setGameSpeed("SLOW");
                 }
                 else if (speed.equals("Normal")) {
+                   gameModel.setGameSpeed("NORMAL");
                           
                 }
                 else if (speed.equals("Fast")) {
