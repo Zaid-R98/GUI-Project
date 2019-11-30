@@ -55,6 +55,13 @@ public class GameModel {
         this.zoomLevel = zoomLevel;
     }
 
+    public GameSpeed getGameSpeed() {
+        return gameSpeed;
+    }
+
+    public void setGameSpeed(GameSpeed gameSpeed) {
+        this.gameSpeed = gameSpeed;
+    }
     
     public int incrementGen()
     {  generation += 1;
@@ -68,13 +75,7 @@ public class GameModel {
         this.isAutomaticMode = isAutomaticMode;
     
     }
-    
-     public void setGameSpeed(String Speed) {
-        this.gameSpeed =  GameSpeed.valueOf(Speed);
-    }
-    
-
-    
+        
     //Abdullah's code V2
     public void performCellLifeCalculation()
     {
@@ -133,12 +134,12 @@ public class GameModel {
     public int getNumericDelayOfGameSpeed(){
         switch (gameSpeed) {
             case SLOW:
-                return 2000;
+                return 1000;
             case FAST:
-                return 200;
+                return 50;
             default:
                 //if NORMAL
-                return 700;
+                return 500;
         }
     }
     

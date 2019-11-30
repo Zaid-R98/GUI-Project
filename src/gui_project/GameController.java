@@ -156,22 +156,23 @@ public class GameController {
         
         panel.addSpeedComboBoxListener(new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent ae) {
-               JComboBox combo = (JComboBox) ae.getSource();
-               String speed = (String) combo.getSelectedItem();
-               
-                if (speed.equals("Slow")) {
-                   gameModel.setGameSpeed("SLOW");
+            public void actionPerformed(ActionEvent e) {
+                String selectedOption = (String) ((JComboBox) e.getSource()).getSelectedItem();
+                if(gameSpeedTimer != null)
+                    gameSpeedTimer.stop();
+                if (selectedOption.equals("Slow")){
+                    gameModel.setGameSpeed(GameSpeed.SLOW);
                 }
-                else if (speed.equals("Normal")) {
-                   gameModel.setGameSpeed("NORMAL");
-                          
+                else if (selectedOption.equals("Normal")){
+                    gameModel.setGameSpeed(GameSpeed.NORMAL);
                 }
-                else if (speed.equals("Fast")) {
-                    gameModel.setGameSpeed("FAST");
+                else{
+                    gameModel.setGameSpeed(GameSpeed.FAST);
                 }
+                setupTimerForAutomaticMode();
             }
         });
+        
         panel.addZoomComboBoxListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

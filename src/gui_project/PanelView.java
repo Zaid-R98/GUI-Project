@@ -47,13 +47,15 @@ public class PanelView extends JPanel{
         
         String[] Speeds = {"Slow", "Normal", "Fast"};
         speed = new JComboBox(Speeds);
+        speed.setEditable(false);
+        speed.setSelectedItem("Normal");
         add(speed);
         
-        String[] zoomLevels = {"Small", "Medium", "Big"};
+        String[] zoomLevels = {"Small", "Medium", "Large"};
         zoom = new JComboBox(zoomLevels);
         zoom.setEditable(false);
         zoom.setSelectedItem("Medium");
-        add(zoom);   
+        add(zoom);     
         
         generation = new JLabel();
         setGenLabel(0);
