@@ -22,8 +22,9 @@ public class GameModel {
     private int currentCellWidth = 20;
     //Changes based on Scrolling
     private Point topLeftCellVisible = new Point(TOTAL_GRID_SIZE/3, TOTAL_GRID_SIZE/3);
-    
-    private int generation=0; 
+    private int generation=0;
+    private boolean isAutomaticMode = false;
+    private GameSpeed gameSpeed = GameSpeed.NORMAL;
     
     public GameModel(){
         //Initialize grid to dead cells
@@ -54,6 +55,15 @@ public class GameModel {
     public int incrementGen()
     {  generation += 1;
         return generation;}
+    
+    public boolean getIsAutomaticMode() {
+        return isAutomaticMode;
+    }
+
+    public void setIsAutomaticMode(boolean isAutomaticMode) {
+        this.isAutomaticMode = isAutomaticMode;
+    }
+
     
     //Abdullah's code V2
     public void performCellLifeCalculation()
@@ -109,4 +119,20 @@ public class GameModel {
         }
         cellGrid = nextVersionOfCellGrid;
     }
+    
+    public int getNumericDelayOfGameSpeed(){
+        switch (gameSpeed) {
+            case SLOW:
+                return 1000;
+            case NORMAL:
+                return 500;
+            default:
+                //if FAST
+                return 250;
+        }
+    }
+}
+
+enum GameSpeed{
+    SLOW, NORMAL, FAST
 }

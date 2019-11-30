@@ -22,19 +22,22 @@ public class GameController {
     private GridView gridView;
     private PanelView panel; 
     
+    private Timer gameSpeedTimer = null;
+    
     public GameController(GameModel gameModel, GridView gridView, PanelView panel) {
         this.gameModel = gameModel;
         this.gridView = gridView;
         this.panel = panel;
+        
+        //Display initial grid
         updateGridViewDisplay();
         
+        //Add all listeners     
         panel.addNextButtonListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e)
             {
-                int temp = gameModel.incrementGen();
-                panel.setGenLabel(temp);
-                gameModel.performCellLifeCalculation();
+                performOneCellGeneration();
                 updateGridViewDisplay();
             }
         });
@@ -46,31 +49,51 @@ public class GameController {
                     for (int j = 0; j < gridView.getPortionOfCellsVisible()[i].length; ++j) { 
                         //Find and set color of cell
                         if (gridView.getPortionOfCellsVisible()[i][j].getRect().contains(e.getPoint())){
-                            //alive->dead and vice versa
+                            //Find location of cell in original model from visible portion
                             int offsetRow = gameModel.getTopLeftCellVisible().y + i;
                             int offsetCol = gameModel.getTopLeftCellVisible().x + j;
                             
+                            //Flip alive status in model
                             gameModel.setAliveStatusAt(offsetRow, offsetCol, !gameModel.getAliveStatusAt(offsetRow, offsetCol));  
                         }          
                     }
                 }
+                //Update grid with new model status
                 updateGridViewDisplay();
             }         
         });
     
-//        panel.addStartButtonListener(new ActionListener(){
-//            @Override
-//            public void actionPerformed(ActionEvent e)
-//            {
-//                new Timer(50, new ActionListener() {
-//                    public void actionPerformed(ActionEvent e){
-//                        int temp = gameModel.incrementGen();
-//                        panel.setGenLabel(temp);
-//                        CellLife();                        
-//                    }
-//                }).start();
-//            }
-//        });
+        panel.addStartButtonListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                
+                //Flip Automatic mode in model
+                gameModel.setIsAutomaticMode(!gameModel.getIsAutomaticMode());
+                
+                if (gameModel.getIsAutomaticMode()){
+                    if (gameSpeedTimer != null){
+                        gameSpeedTimer.stop();
+                    }
+                    
+                    gameSpeedTimer = new Timer(gameModel.getNumericDelayOfGameSpeed(), 
+                            new ActionListener() {
+                                @Override
+                                public void actionPerformed(ActionEvent e) {
+                                    performOneCellGeneration();
+                                    updateGridViewDisplay();
+                                }
+                            });
+                    
+                    panel.updateViewForAutomaticMode(true);
+                    gameSpeedTimer.start();
+                }
+                else{
+                    gameSpeedTimer.stop();
+                    panel.updateViewForAutomaticMode(false);
+                }
+               
+            }
+        });
     }
     
     private void updateGridViewDisplay(){
@@ -114,9 +137,17 @@ public class GameController {
         gridView.repaint();
         
     }
+    
+    private void performOneCellGeneration(){
+        int temp = gameModel.incrementGen();
+        panel.setGenLabel(temp);
+        gameModel.performCellLifeCalculation();
+    }
    
     
 }
+
+
 
 
 
