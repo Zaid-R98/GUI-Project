@@ -25,7 +25,8 @@ public class GameModel {
     private int generation=0;
     private boolean isAutomaticMode = false;
     private GameSpeed gameSpeed = GameSpeed.NORMAL;
-    
+
+   
     public GameModel(){
         //Initialize grid to dead cells
         for (int i = 0; i < cellGrid.length; ++i){
@@ -62,7 +63,13 @@ public class GameModel {
 
     public void setIsAutomaticMode(boolean isAutomaticMode) {
         this.isAutomaticMode = isAutomaticMode;
+    
     }
+    
+     public void setGameSpeed(String Speed) {
+        this.gameSpeed =  GameSpeed.valueOf(Speed);
+    }
+    
 
     
     //Abdullah's code V2

@@ -44,7 +44,7 @@ public class PanelView extends JPanel{
         Start = new JButton("Start");
         add(Start);
         
-        String[] Speeds = {"Slow", "Normal","Fast"};
+        String[] Speeds = {"Normal", "Slow","Fast"};
         speed = new JComboBox(Speeds);
         add(speed);
         
