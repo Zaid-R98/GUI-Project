@@ -33,14 +33,14 @@ public class GameController {
         updateGridViewDisplay();
         
 <<<<<<< HEAD
-=======
         //Add all listeners     
 >>>>>>> bbba96b2403eaf401a47059789719a23425c277c
+        //Add all listeners     
+
         panel.addNextButtonListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e)
             {
-<<<<<<< HEAD
                NextStep();
             }
         });
@@ -53,6 +53,7 @@ public class GameController {
                 
            
 =======
+          
                 performOneCellGeneration();
                 updateGridViewDisplay();
             }
@@ -109,6 +110,7 @@ public class GameController {
                 }
                
 >>>>>>> bbba96b2403eaf401a47059789719a23425c277c
+              
             }
         });
     
@@ -118,7 +120,7 @@ public class GameController {
     public void NextStep(){
         int temp = gameModel.incrementGen();
         panel.setGenLabel(temp);
-        CellLife();
+      //  CellLife();
     }
     
     
