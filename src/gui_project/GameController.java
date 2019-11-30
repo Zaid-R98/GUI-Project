@@ -35,6 +35,7 @@ public class GameController {
 <<<<<<< HEAD
         //Add all listeners     
 >>>>>>> bbba96b2403eaf401a47059789719a23425c277c
+
         //Add all listeners     
 
         panel.addNextButtonListener(new ActionListener(){
@@ -51,8 +52,6 @@ public class GameController {
             public void actionPerformed(ActionEvent ae) {
            
                 
-           
-=======
           
                 performOneCellGeneration();
                 updateGridViewDisplay();
@@ -108,8 +107,6 @@ public class GameController {
                     gameSpeedTimer.stop();
                     panel.updateViewForAutomaticMode(false);
                 }
-               
->>>>>>> bbba96b2403eaf401a47059789719a23425c277c
               
             }
         });
