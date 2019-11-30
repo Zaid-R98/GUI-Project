@@ -39,6 +39,15 @@ public class GameController {
         initializePanelViewListeners();
     }
     
+    
+    public void NextStep(){
+        int temp = gameModel.incrementGen();
+        panel.setGenLabel(temp);
+      //  CellLife();
+    }
+    
+    
+    
     private void updateGridViewDisplay(){
         int gridViewWidth = gridView.getWidth();
         int gridViewHeight = gridView.getHeight();
