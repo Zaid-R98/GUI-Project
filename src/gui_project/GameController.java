@@ -7,7 +7,10 @@ package gui_project;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.geom.Rectangle2D;
+import javax.swing.Timer;
 
 /**
  *
@@ -24,28 +27,50 @@ public class GameController {
         this.gridView = gridView;
         this.panel = panel;
         updateGridViewDisplay();
+        
         panel.addNextButtonListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e)
             {
                 int temp = gameModel.incrementGen();
                 panel.setGenLabel(temp);
-                CellLife();
+                gameModel.performCellLifeCalculation();
+                updateGridViewDisplay();
             }
         });
-        panel.addStartButtonListener(new ActionListener(){
+        
+        gridView.addGridClickingListener(new MouseAdapter() {
             @Override
-            public void actionPerformed(ActionEvent e)
-            {
-                new Timer(50, new ActionListener() {
-                    public void actionPerformed(ActionEvent e){
-                        int temp = gameModel.incrementGen();
-                        panel.setGenLabel(temp);
-                        CellLife();                        
+            public void mouseClicked(MouseEvent e) {
+                for (int i = 0; i < gridView.getPortionOfCellsVisible().length; ++i) {
+                    for (int j = 0; j < gridView.getPortionOfCellsVisible()[i].length; ++j) { 
+                        //Find and set color of cell
+                        if (gridView.getPortionOfCellsVisible()[i][j].getRect().contains(e.getPoint())){
+                            //alive->dead and vice versa
+                            int offsetRow = gameModel.getTopLeftCellVisible().y + i;
+                            int offsetCol = gameModel.getTopLeftCellVisible().x + j;
+                            
+                            gameModel.setAliveStatusAt(offsetRow, offsetCol, !gameModel.getAliveStatusAt(offsetRow, offsetCol));  
+                        }          
                     }
-                }).start();
-            }
+                }
+                updateGridViewDisplay();
+            }         
         });
+    
+//        panel.addStartButtonListener(new ActionListener(){
+//            @Override
+//            public void actionPerformed(ActionEvent e)
+//            {
+//                new Timer(50, new ActionListener() {
+//                    public void actionPerformed(ActionEvent e){
+//                        int temp = gameModel.incrementGen();
+//                        panel.setGenLabel(temp);
+//                        CellLife();                        
+//                    }
+//                }).start();
+//            }
+//        });
     }
     
     private void updateGridViewDisplay(){
@@ -90,63 +115,7 @@ public class GameController {
         
     }
    
-    //Abdullah's code V2
-    private void CellLife()
-    {
-        Cell next[][] = new Cell[gridView.getPortionOfCellsVisible().length][gridView.getPortionOfCellsVisible()[0].length];
-        for(int i = 0; i < gridView.getPortionOfCellsVisible().length; ++i)
-            for(int j = 0; j < gridView.getPortionOfCellsVisible()[i].length; ++j)
-            {
-                int top, left, bottom, right, alivecells;
-                top = left = bottom = right = alivecells = 0;
-                if(i < gridView.getPortionOfCellsVisible().length -1)
-                {
-                    if(j < gridView.getPortionOfCellsVisible()[i].length -1)
-                    {
-                        alivecells+=((gridView.getPortionOfCellsVisible()[i+1][j+1].getIsAlive())? 1:0);
-                        right = ((gridView.getPortionOfCellsVisible()[i][j+1].getIsAlive())? 1:0);
-                    }
-                    if(j > 0)
-                    {
-                        alivecells+=((gridView.getPortionOfCellsVisible()[i+1][j-1].getIsAlive())? 1:0);
-                        left = ((gridView.getPortionOfCellsVisible()[i][j-1].getIsAlive())? 1:0);
-                    }
-                    bottom = ((gridView.getPortionOfCellsVisible()[i+1][j].getIsAlive())? 1:0);
-                }
-                if(i > 0)
-                {
-                    if(j < gridView.getPortionOfCellsVisible()[i].length -1 )
-                    {
-                        alivecells+=((gridView.getPortionOfCellsVisible()[i-1][j+1].getIsAlive())? 1:0);
-                        right = ((gridView.getPortionOfCellsVisible()[i][j+1].getIsAlive())? 1:0);
-                    }
-                    if(j > 0)
-                    {
-                        alivecells+=((gridView.getPortionOfCellsVisible()[i-1][j-1].getIsAlive())? 1:0);
-                        left = ((gridView.getPortionOfCellsVisible()[i][j-1].getIsAlive())? 1:0);
-                    }
-                    top = ((gridView.getPortionOfCellsVisible()[i-1][j].getIsAlive())? 1:0);
-                }
-                alivecells+= top + left + bottom + right;
-                if(gridView.getPortionOfCellsVisible()[i][j].getIsAlive() && (alivecells <= 1 || alivecells >= 4))
-                {
-                    next[i][j] = new Cell(false);
-                    next[i][j].setRect((Rectangle2D.Double)gridView.getPortionOfCellsVisible()[i][j].getRect());
-                }
-                else if(!gridView.getPortionOfCellsVisible()[i][j].getIsAlive() && alivecells == 3)
-                {
-                    next[i][j] = new Cell(true);
-                    next[i][j].setRect((Rectangle2D.Double)gridView.getPortionOfCellsVisible()[i][j].getRect());
-                }
-                else
-                {
-                    next[i][j] = new Cell(gridView.getPortionOfCellsVisible()[i][j].getIsAlive());
-                    next[i][j].setRect((Rectangle2D.Double)gridView.getPortionOfCellsVisible()[i][j].getRect());
-                }
-            }
-        gridView.setPortionOfCellsVisible(next);
-        gridView.repaint();
-    }
+    
 }
 
 

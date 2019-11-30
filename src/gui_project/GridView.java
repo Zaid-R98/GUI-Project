@@ -11,6 +11,7 @@ import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.geom.Rectangle2D;
 import javax.swing.JComponent;
 
@@ -22,34 +23,11 @@ public class GridView extends JComponent{
 
     private Cell[][] portionOfCellsVisible;
 
-    public GridView() {
-       addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                selectCellByPoint(e.getPoint());
-                repaint();
-            }         
-        });
+    public GridView() {  }
     
-   }
-    
-    private void selectCellByPoint(Point point) {
-         for (int i = 0; i < portionOfCellsVisible.length; ++i) {
-            for (int j = 0; j < portionOfCellsVisible[i].length; ++j) { 
-                //Find and set color of cell
-                if (portionOfCellsVisible[i][j].getRect().contains(point)){
-                    if (portionOfCellsVisible[i][j].getIsAlive()) {
-                         portionOfCellsVisible[i][j].setIsAlive(false);
-                    }
-                    else{ portionOfCellsVisible[i][j].setIsAlive(true);}
-                    repaint();
-                    return;
-                }
-                
-                
-                
-            }
-    }}
+    public void addGridClickingListener(MouseListener listener){
+        addMouseListener(listener);
+    }
 
     @Override
     protected void paintComponent(Graphics g) {

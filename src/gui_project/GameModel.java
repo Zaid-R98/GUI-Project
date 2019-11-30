@@ -6,6 +6,7 @@
 package gui_project;
 
 import java.awt.Point;
+import java.awt.geom.Rectangle2D;
 
 /**
  *
@@ -37,6 +38,9 @@ public class GameModel {
         return cellGrid[x][y].getIsAlive();
     }
     
+    void setAliveStatusAt(int x, int y, boolean aliveStatus) {
+        cellGrid[x][y].setIsAlive(aliveStatus);
+    }
     
     public Point getTopLeftCellVisible() {
         return topLeftCellVisible;
@@ -50,4 +54,59 @@ public class GameModel {
     public int incrementGen()
     {  generation += 1;
         return generation;}
+    
+    //Abdullah's code V2
+    public void performCellLifeCalculation()
+    {
+        Cell nextVersionOfCellGrid[][] = new Cell[TOTAL_GRID_SIZE][TOTAL_GRID_SIZE];
+        for(int i = 0; i < cellGrid.length; ++i){
+            for(int j = 0; j < cellGrid[i].length; ++j)
+            {
+                int top, left, bottom, right, alivecells;
+                top = left = bottom = right = alivecells = 0;
+                if(i < cellGrid.length -1)
+                {
+                    if(j < cellGrid[i].length -1)
+                    {
+                        alivecells+=((cellGrid[i+1][j+1].getIsAlive())? 1:0);
+                        right = ((cellGrid[i][j+1].getIsAlive())? 1:0);
+                    }
+                    if(j > 0)
+                    {
+                        alivecells+=((cellGrid[i+1][j-1].getIsAlive())? 1:0);
+                        left = ((cellGrid[i][j-1].getIsAlive())? 1:0);
+                    }
+                    bottom = ((cellGrid[i+1][j].getIsAlive())? 1:0);
+                }
+                if(i > 0)
+                {
+                    if(j < cellGrid[i].length -1 )
+                    {
+                        alivecells+=((cellGrid[i-1][j+1].getIsAlive())? 1:0);
+                        right = ((cellGrid[i][j+1].getIsAlive())? 1:0);
+                    }
+                    if(j > 0)
+                    {
+                        alivecells+=((cellGrid[i-1][j-1].getIsAlive())? 1:0);
+                        left = ((cellGrid[i][j-1].getIsAlive())? 1:0);
+                    }
+                    top = ((cellGrid[i-1][j].getIsAlive())? 1:0);
+                }
+                alivecells+= top + left + bottom + right;
+                if(cellGrid[i][j].getIsAlive() && (alivecells <= 1 || alivecells >= 4))
+                {
+                    nextVersionOfCellGrid[i][j] = new Cell(false);
+                }
+                else if(!cellGrid[i][j].getIsAlive() && alivecells == 3)
+                {
+                    nextVersionOfCellGrid[i][j] = new Cell(true);
+                }
+                else
+                {
+                    nextVersionOfCellGrid[i][j] = new Cell(cellGrid[i][j].getIsAlive());
+                }
+            }
+        }
+        cellGrid = nextVersionOfCellGrid;
+    }
 }
