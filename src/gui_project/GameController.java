@@ -33,18 +33,13 @@ public class GameController {
         
         //Display initial grid
         updateGridViewDisplay();
-        
+ 
         //Add all listeners       
         initializeGridViewListeners();
         initializePanelViewListeners();
     }
     
-    
-    public void NextStep(){
-        int temp = gameModel.incrementGen();
-        panel.setGenLabel(temp);
-      //  CellLife();
-    }
+   
     
     
     
