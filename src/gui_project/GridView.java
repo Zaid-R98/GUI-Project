@@ -13,6 +13,7 @@ import java.awt.event.ComponentListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 import java.awt.geom.Rectangle2D;
 import javax.swing.JComponent;
 
@@ -28,6 +29,18 @@ public class GridView extends JComponent{
     
     public void addGridClickingListener(MouseListener listener){
         addMouseListener(listener);
+    }
+    
+    public void addGridPressingListener(MouseListener listener){
+        addMouseListener(listener);
+    }
+    
+    public void addGridReleasedListener(MouseListener listener){
+        addMouseListener(listener);
+    }
+    
+    public void addGridDraggingListener(MouseMotionListener listener){
+        addMouseMotionListener(listener);
     }
     
     public void addComponentResizedListener(ComponentListener listener){

@@ -11,6 +11,9 @@ import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionAdapter;
+import java.awt.Cursor;
+import java.awt.Point;
 import javax.swing.JComboBox;
 import javax.swing.Timer;
 
@@ -22,9 +25,10 @@ public class GameController {
 
     private GameModel gameModel;
     private GridView gridView;
-    private PanelView panel; 
+    private PanelView panel;
     
     private Timer gameSpeedTimer = null;
+    private Point stored = null;
     
     public GameController(GameModel gameModel, GridView gridView, PanelView panel) {
         this.gameModel = gameModel;
@@ -38,10 +42,6 @@ public class GameController {
         initializeGridViewListeners();
         initializePanelViewListeners();
     }
-    
-   
-    
-    
     
     private void updateGridViewDisplay(){
         int gridViewWidth = gridView.getWidth();
@@ -111,6 +111,51 @@ public class GameController {
                 //Update grid with new model status
                 updateGridViewDisplay();
             }         
+        });
+        
+        gridView.addGridPressingListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                stored = e.getPoint();
+                gridView.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+            }
+        });
+        
+        gridView.addGridReleasedListener(new MouseAdapter() {
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                gridView.setCursor(Cursor.getDefaultCursor());
+            }
+        });
+        
+        gridView.addGridDraggingListener(new MouseMotionAdapter() {
+            @Override
+            public void mouseDragged(MouseEvent e) {
+                double x_diff = e.getX() - stored.getX();
+                double y_diff = e.getY() - stored.getY();
+                int currentCellWidth = gameModel.getCurrentCellWidthFromZoomLevel();
+//                boolean up, down, left, right;
+//                up = down = left = right = false;
+//                if(x_diff < 0 && Math.abs(x_diff) >= currentCellWidth)
+//                    left = true;
+//                if(x_diff >= currentCellWidth)
+//                    right = true;
+//                if(y_diff < 0 && Math.abs(y_diff) >= currentCellWidth)
+//                    down = true;
+//                if(y_diff >= currentCellWidth)
+//                    up = true;    
+                int offsetCol = gameModel.getTopLeftCellVisible().x 
+                                + ((x_diff < 0 && Math.abs(x_diff) >= currentCellWidth)? -1:0)
+                                + ((x_diff >= currentCellWidth)? 1:0);
+                int offsetRow = gameModel.getTopLeftCellVisible().y 
+                                + ((y_diff < 0 && Math.abs(y_diff) >= currentCellWidth)? -1:0)
+                                + ((y_diff >= currentCellWidth)? 1:0);
+                gameModel.setTopLeftCellVisible(new Point(offsetRow, offsetCol));
+                updateGridViewDisplay();
+               
+                stored.x -= (Math.abs(x_diff) >= currentCellWidth)? e.getX():0 ;
+                stored.y -= (Math.abs(y_diff) >= currentCellWidth)? e.getY():0 ;
+            }
         });
         
         gridView.addComponentListener(new ComponentAdapter() {

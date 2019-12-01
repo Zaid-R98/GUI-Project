@@ -46,6 +46,10 @@ public class GameModel {
     public Point getTopLeftCellVisible() {
         return topLeftCellVisible;
     }
+
+    public void setTopLeftCellVisible(Point topLeftCellVisible) {
+        this.topLeftCellVisible = topLeftCellVisible;
+    }
     
     public ZoomLevel getZoomLevel() {
         return zoomLevel;
