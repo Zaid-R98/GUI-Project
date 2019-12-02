@@ -125,6 +125,7 @@ public class GameController {
             @Override
             public void mouseReleased(MouseEvent e) {
                 gridView.setCursor(Cursor.getDefaultCursor());
+                stored = null;
             }
         });
         
@@ -133,7 +134,7 @@ public class GameController {
             public void mouseDragged(MouseEvent e) {
                 double x_diff = e.getX() - stored.getX();
                 double y_diff = e.getY() - stored.getY();
-                int currentCellWidth = gameModel.getCurrentCellWidthFromZoomLevel();
+                double currentCellWidth = gameModel.getCurrentCellWidthFromZoomLevel();
 //                boolean up, down, left, right;
 //                up = down = left = right = false;
 //                if(x_diff < 0 && Math.abs(x_diff) >= currentCellWidth)
@@ -144,17 +145,25 @@ public class GameController {
 //                    down = true;
 //                if(y_diff >= currentCellWidth)
 //                    up = true;    
-                int offsetCol = gameModel.getTopLeftCellVisible().x 
-                                + ((x_diff < 0 && Math.abs(x_diff) >= currentCellWidth)? -1:0)
-                                + ((x_diff >= currentCellWidth)? 1:0);
-                int offsetRow = gameModel.getTopLeftCellVisible().y 
-                                + ((y_diff < 0 && Math.abs(y_diff) >= currentCellWidth)? -1:0)
-                                + ((y_diff >= currentCellWidth)? 1:0);
+                int x_offset = (int) Math.round(x_diff/currentCellWidth);
+                int y_offset = (int) Math.round(y_diff/currentCellWidth);
+
+                int offsetCol = gameModel.getTopLeftCellVisible().x-x_offset;
+                int offsetRow = gameModel.getTopLeftCellVisible().y-y_offset;
+                
+               // int offsetCol = gameModel.getTopLeftCellVisible().x 
+//                                + ((x_diff < 0 && Math.abs(x_diff) >= currentCellWidth)? -1:0)
+//                                + ((x_diff >= currentCellWidth)? 1:0);
+//                int offsetRow = gameModel.getTopLeftCellVisible().y 
+//                                + ((y_diff < 0 && Math.abs(y_diff) >= currentCellWidth)? -1:0)
+//                                + ((y_diff >= currentCellWidth)? 1:0);
                 gameModel.setTopLeftCellVisible(new Point(offsetRow, offsetCol));
                 updateGridViewDisplay();
-               
-                stored.x -= (Math.abs(x_diff) >= currentCellWidth)? e.getX():0 ;
-                stored.y -= (Math.abs(y_diff) >= currentCellWidth)? e.getY():0 ;
+                
+              
+//               
+//                stored.x -= (Math.abs(x_diff) >= currentCellWidth)? e.getX():0 ;
+//                stored.y -= (Math.abs(y_diff) >= currentCellWidth)? e.getY():0 ;
             }
         });
         
