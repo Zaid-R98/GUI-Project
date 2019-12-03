@@ -71,10 +71,8 @@ public class PanelView extends JPanel{
         
         generation = new JLabel();
         setGenLabel(0);
-<<<<<<< HEAD
         add(generation);    
-          
-=======
+
         add(generation);  
         //creating the edit option checkbox menu.
         checkboxPanel=new JPanel();
@@ -83,7 +81,6 @@ public class PanelView extends JPanel{
         Enable= new JCheckBox("Enable");
         checkboxPanel.add(Enable);
         add(checkboxPanel);
->>>>>>> 54abc510d4ea974165500c76a28630a6c523a0e2
     }
     
     public void updateViewForAutomaticMode(boolean isAutomaticMode){

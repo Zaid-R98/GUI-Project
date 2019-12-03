@@ -14,7 +14,6 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
 import java.awt.Cursor;
 import java.awt.Point;
-<<<<<<< HEAD
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
@@ -23,10 +22,8 @@ import java.io.PrintWriter;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-=======
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
->>>>>>> 54abc510d4ea974165500c76a28630a6c523a0e2
 import javax.swing.JComboBox;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
@@ -45,12 +42,8 @@ public class GameController {
     
     private Timer gameSpeedTimer = null;
     private Point stored = null;
-<<<<<<< HEAD
     private JPopupMenu popup;
-=======
     private boolean check;//stores the state of the checkbox - Zaid
->>>>>>> 54abc510d4ea974165500c76a28630a6c523a0e2
-    
     public GameController(GameModel gameModel, GridView gridView, PanelView panel) {
         this.gameModel = gameModel;
         this.gridView = gridView;
@@ -151,12 +144,8 @@ public class GameController {
         
         gridView.addGridClickingListener(new MouseAdapter() {
             @Override
-<<<<<<< HEAD
-            public void mouseClicked(MouseEvent e) { 
-=======
             public void mouseClicked(MouseEvent e) {
                 if(getcheckstatus()){//checks whether the JcheckBox is enabled or disabled- Zaid
->>>>>>> 54abc510d4ea974165500c76a28630a6c523a0e2
                 for (int i = 0; i < gridView.getPortionOfCellsVisible().length; ++i) {
                     for (int j = 0; j < gridView.getPortionOfCellsVisible()[i].length; ++j) { 
                         //Find and set color of cell
