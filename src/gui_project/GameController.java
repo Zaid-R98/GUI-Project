@@ -100,8 +100,8 @@ public class GameController {
                         //Find and set color of cell
                         if (gridView.getPortionOfCellsVisible()[i][j].getRect().contains(e.getPoint())){
                             //Find location of cell in original model from visible portion
-                            int offsetRow = gameModel.getTopLeftCellVisible().y + i;
-                            int offsetCol = gameModel.getTopLeftCellVisible().x + j;
+                            int offsetRow = gameModel.getTopLeftCellVisible().x + i;
+                            int offsetCol = gameModel.getTopLeftCellVisible().y + j;
                             
                             //Flip alive status in model
                             gameModel.setAliveStatusAt(offsetRow, offsetCol, !gameModel.getAliveStatusAt(offsetRow, offsetCol));  
