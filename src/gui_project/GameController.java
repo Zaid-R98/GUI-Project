@@ -14,6 +14,8 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
 import java.awt.Cursor;
 import java.awt.Point;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import javax.swing.JComboBox;
 import javax.swing.Timer;
 
@@ -29,6 +31,7 @@ public class GameController {
     
     private Timer gameSpeedTimer = null;
     private Point stored = null;
+    private boolean check;//stores the state of the checkbox - Zaid
     
     public GameController(GameModel gameModel, GridView gridView, PanelView panel) {
         this.gameModel = gameModel;
@@ -43,6 +46,15 @@ public class GameController {
         initializePanelViewListeners();
     }
     
+    public void setcheck(boolean setcheck)//true if enabled checkbox is checked.- Zaid
+    {
+        check=setcheck;
+    }
+    
+    public boolean getcheckstatus()//tells the controler if the jcheckbox is checked or not.- Zaid
+    {
+        return check;
+    }
     private void updateGridViewDisplay(){
         int gridViewWidth = gridView.getWidth();
         int gridViewHeight = gridView.getHeight();
@@ -92,9 +104,11 @@ public class GameController {
     }
     
     private void initializeGridViewListeners(){
+        
         gridView.addGridClickingListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
+                if(getcheckstatus()){//checks whether the JcheckBox is enabled or disabled- Zaid
                 for (int i = 0; i < gridView.getPortionOfCellsVisible().length; ++i) {
                     for (int j = 0; j < gridView.getPortionOfCellsVisible()[i].length; ++j) { 
                         //Find and set color of cell
@@ -110,8 +124,9 @@ public class GameController {
                 }
                 //Update grid with new model status
                 updateGridViewDisplay();
-            }         
+            }  }       
         });
+        
         
         gridView.addGridPressingListener(new MouseAdapter() {
             @Override
@@ -201,6 +216,26 @@ public class GameController {
             }
         });
         
+        
+        panel.addEnableItemListener(new ItemListener()//JCheckBox enabled item listener- Zaid
+        {
+
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                if(e.getStateChange()==1)
+                {
+                    setcheck(true);//updates to check whether to enable mouseclicks or not.
+                }
+                else
+                {
+                    setcheck(false);
+                }
+                
+            }
+            
+        });
+        
+        
         panel.addStartButtonListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e) {        
@@ -266,7 +301,10 @@ public class GameController {
         });
         
     }
-   
+    
+    
+    
+    
     private void setupTimerForAutomaticMode(){
         gameSpeedTimer = new Timer(gameModel.getNumericDelayOfGameSpeed(),
                 new ActionListener() {
