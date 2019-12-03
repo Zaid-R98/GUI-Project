@@ -7,7 +7,10 @@ package gui_project;
 
 import java.awt.Color;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemListener;
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
@@ -29,7 +32,9 @@ public class PanelView extends JPanel{
       private final JComboBox zoom;
       private final JLabel generation;
       private int gen;
-
+      private final JPanel checkboxPanel;//Added Panel to store the CheckBox- Zaid
+      private final JCheckBox Enable;
+    
       public  void setGen(int currentgen) 
       {
           this.gen = currentgen;
@@ -66,17 +71,31 @@ public class PanelView extends JPanel{
         
         generation = new JLabel();
         setGenLabel(0);
+<<<<<<< HEAD
         add(generation);    
           
+=======
+        add(generation);  
+        //creating the edit option checkbox menu.
+        checkboxPanel=new JPanel();
+        checkboxPanel.setBackground(Color.LIGHT_GRAY);
+        checkboxPanel.setBorder(BorderFactory.createTitledBorder("Edit Mode"));
+        Enable= new JCheckBox("Enable");
+        checkboxPanel.add(Enable);
+        add(checkboxPanel);
+>>>>>>> 54abc510d4ea974165500c76a28630a6c523a0e2
     }
     
     public void updateViewForAutomaticMode(boolean isAutomaticMode){
         if (isAutomaticMode){
             Next.setEnabled(false);
             Start.setText("Stop");
+            Enable.setSelected(false);//CheckBox disables in automatic mode- Zaid
+            Enable.setEnabled(false);
         }
         else{
-            Next.setEnabled(true);
+            Next.setEnabled(true);//Revert changes once automatic mode is done - Zaid
+            Enable.setEnabled(true);
             Start.setText("Start");
         }
     }
@@ -108,5 +127,10 @@ public class PanelView extends JPanel{
     
     public void addZoomComboBoxListener(ActionListener listener){
         zoom.addActionListener(listener);
+    }
+    
+    public void addEnableItemListener(ItemListener listener)//adding the item listener to the JCheckBox- Zaid
+    {
+        Enable.addItemListener(listener);
     }
 }

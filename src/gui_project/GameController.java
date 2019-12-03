@@ -14,6 +14,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
 import java.awt.Cursor;
 import java.awt.Point;
+<<<<<<< HEAD
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
@@ -22,6 +23,10 @@ import java.io.PrintWriter;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+=======
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+>>>>>>> 54abc510d4ea974165500c76a28630a6c523a0e2
 import javax.swing.JComboBox;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
@@ -40,7 +45,11 @@ public class GameController {
     
     private Timer gameSpeedTimer = null;
     private Point stored = null;
+<<<<<<< HEAD
     private JPopupMenu popup;
+=======
+    private boolean check;//stores the state of the checkbox - Zaid
+>>>>>>> 54abc510d4ea974165500c76a28630a6c523a0e2
     
     public GameController(GameModel gameModel, GridView gridView, PanelView panel) {
         this.gameModel = gameModel;
@@ -81,6 +90,15 @@ public class GameController {
         });
     }
     
+    public void setcheck(boolean setcheck)//true if enabled checkbox is checked.- Zaid
+    {
+        check=setcheck;
+    }
+    
+    public boolean getcheckstatus()//tells the controler if the jcheckbox is checked or not.- Zaid
+    {
+        return check;
+    }
     private void updateGridViewDisplay(){
         int gridViewWidth = gridView.getWidth();
         int gridViewHeight = gridView.getHeight();
@@ -130,9 +148,15 @@ public class GameController {
     }
     
     private void initializeGridViewListeners(){
+        
         gridView.addGridClickingListener(new MouseAdapter() {
             @Override
+<<<<<<< HEAD
             public void mouseClicked(MouseEvent e) { 
+=======
+            public void mouseClicked(MouseEvent e) {
+                if(getcheckstatus()){//checks whether the JcheckBox is enabled or disabled- Zaid
+>>>>>>> 54abc510d4ea974165500c76a28630a6c523a0e2
                 for (int i = 0; i < gridView.getPortionOfCellsVisible().length; ++i) {
                     for (int j = 0; j < gridView.getPortionOfCellsVisible()[i].length; ++j) { 
                         //Find and set color of cell
@@ -148,8 +172,9 @@ public class GameController {
                 }
                 //Update grid with new model status
                 updateGridViewDisplay();
-            }         
+            }  }       
         });
+        
         
         gridView.addGridPressingListener(new MouseAdapter() {
             @Override
@@ -248,6 +273,26 @@ public class GameController {
             }
         });
         
+        
+        panel.addEnableItemListener(new ItemListener()//JCheckBox enabled item listener- Zaid
+        {
+
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                if(e.getStateChange()==1)
+                {
+                    setcheck(true);//updates to check whether to enable mouseclicks or not.
+                }
+                else
+                {
+                    setcheck(false);
+                }
+                
+            }
+            
+        });
+        
+        
         panel.addStartButtonListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e) {        
@@ -335,7 +380,10 @@ public class GameController {
         });
         
     }
-   
+    
+    
+    
+    
     private void setupTimerForAutomaticMode(){
         gameSpeedTimer = new Timer(gameModel.getNumericDelayOfGameSpeed(),
                 new ActionListener() {
