@@ -35,6 +35,10 @@ public class GameModel {
         }
     }
     
+    public Cell[][] getCellGrid() {
+        return cellGrid;
+    }  
+    
     boolean getAliveStatusAt(int x, int y){
         return cellGrid[x][y].getIsAlive();
     }
@@ -62,6 +66,9 @@ public class GameModel {
     public GameSpeed getGameSpeed() {
         return gameSpeed;
     }
+    
+    public void setgeneration(int gen)
+    {this.generation = gen;}
 
     public void setGameSpeed(GameSpeed gameSpeed) {
         this.gameSpeed = gameSpeed;
@@ -71,6 +78,8 @@ public class GameModel {
     {  generation += 1;
         return generation;}
     
+    public int getgeneration(){return generation;}
+    
     public boolean getIsAutomaticMode() {
         return isAutomaticMode;
     }
@@ -78,6 +87,18 @@ public class GameModel {
     public void setIsAutomaticMode(boolean isAutomaticMode) {
         this.isAutomaticMode = isAutomaticMode;
     
+    }
+    
+    public void Reset(){
+        setgeneration(0);
+        setZoomLevel(zoomLevel.MEDIUM);
+        setGameSpeed(gameSpeed.NORMAL);
+         for (int i = 0; i < cellGrid.length; ++i){
+            for (int j = 0; j < cellGrid[i].length; ++j){
+                cellGrid[i][j] = new Cell();
+            }
+        }
+        
     }
     
     public int sizeMod(int x) {
@@ -182,12 +203,12 @@ public class GameModel {
     public int getCurrentCellWidthFromZoomLevel() {
         switch(zoomLevel){
             case SMALL:
-                return 30;
+                return 10;
             case MEDIUM:
                 return 20;
             default:
                 //if LARGE
-                return 10;
+                return 30;
         }
     }
 }

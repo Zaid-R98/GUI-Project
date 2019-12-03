@@ -10,7 +10,10 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JMenu;
+import javax.swing.JMenuItem;
 import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
 
 /**
  *
@@ -18,6 +21,7 @@ import javax.swing.JPanel;
  */
 public class PanelView extends JPanel{
     
+      private final JButton Clear;
       private final JButton Next;
       private final JButton Start;
       private final JComboBox shape;
@@ -35,9 +39,12 @@ public class PanelView extends JPanel{
         
         setBackground(Color.LIGHT_GRAY);
         
-        String[] Shapes = {"Glider", "R-Pentomino","Small Exploder", "Small spaceship", "Tumbler"};
+        String[] Shapes = {"Glider", "R-Pentomino","Small Exploder", "Small spaceship", "Tumbler", "User's Saved"};
         shape = new JComboBox(Shapes);
         add(shape);
+        
+        Clear = new JButton("Clear");
+        add(Clear);
         
         Next = new JButton("Next");
         add(Next);
@@ -60,7 +67,7 @@ public class PanelView extends JPanel{
         generation = new JLabel();
         setGenLabel(0);
         add(generation);    
-        
+          
     }
     
     public void updateViewForAutomaticMode(boolean isAutomaticMode){
@@ -81,6 +88,10 @@ public class PanelView extends JPanel{
     
     public void addShapeComboBoxListener(ActionListener ShapeAction){
         shape.addActionListener(ShapeAction);
+    }
+    
+    public void addClearButtonListener(ActionListener ClearAction){ 
+        Clear.addActionListener(ClearAction);
     }
     
     public void addNextButtonListener(ActionListener NextAction){

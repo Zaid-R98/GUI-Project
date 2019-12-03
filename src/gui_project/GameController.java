@@ -14,7 +14,18 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
 import java.awt.Cursor;
 import java.awt.Point;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JComboBox;
+import javax.swing.JMenuItem;
+import javax.swing.JPopupMenu;
+import javax.swing.SwingUtilities;
 import javax.swing.Timer;
 
 /**
@@ -29,6 +40,7 @@ public class GameController {
     
     private Timer gameSpeedTimer = null;
     private Point stored = null;
+    private JPopupMenu popup;
     
     public GameController(GameModel gameModel, GridView gridView, PanelView panel) {
         this.gameModel = gameModel;
@@ -41,6 +53,32 @@ public class GameController {
         //Add all listeners       
         initializeGridViewListeners();
         initializePanelViewListeners();
+        
+        
+        //pop up menu for right click
+        popup = new JPopupMenu();
+        JMenuItem save = new JMenuItem("Save");
+        popup.add(save);
+        
+        gridView.addMouseListener(new MouseAdapter() {
+          public void mouseReleased(MouseEvent me){
+                 //for right click pop up menu
+                if(SwingUtilities.isRightMouseButton(me))
+                {popup.show(me.getComponent(), me.getX(), me.getY());}
+                }
+        });
+        
+        save.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                try {
+                    SaveGame();
+                } catch (IOException ex) {
+                    Logger.getLogger(GameController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+
+        });
     }
     
     private void updateGridViewDisplay(){
@@ -94,7 +132,7 @@ public class GameController {
     private void initializeGridViewListeners(){
         gridView.addGridClickingListener(new MouseAdapter() {
             @Override
-            public void mouseClicked(MouseEvent e) {
+            public void mouseClicked(MouseEvent e) { 
                 for (int i = 0; i < gridView.getPortionOfCellsVisible().length; ++i) {
                     for (int j = 0; j < gridView.getPortionOfCellsVisible()[i].length; ++j) { 
                         //Find and set color of cell
@@ -192,6 +230,15 @@ public class GameController {
     }
     
     private void initializePanelViewListeners(){
+        
+        panel.addClearButtonListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+               gameModel.Reset();
+               gameModel.setIsAutomaticMode(false);
+               updateGridViewDisplay();
+            }
+        });
         panel.addNextButtonListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e)
@@ -221,6 +268,28 @@ public class GameController {
                     panel.updateViewForAutomaticMode(false);
                 }
                
+            }
+        });
+        
+        panel.addShapeComboBoxListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+            
+            gameModel.setIsAutomaticMode(false);
+            gameModel.Reset();
+            
+            String selectedShape = (String) ((JComboBox) ae.getSource()).getSelectedItem();
+       
+            String Shape;
+               Shape = selectedShape.toString();
+               
+                try {
+                    //Have function to load this shape
+                    LoadGame(Shape);
+                } catch (FileNotFoundException ex) {
+                    Logger.getLogger(GameController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+             
             }
         });
         
@@ -279,8 +348,50 @@ public class GameController {
         gameSpeedTimer.start();
     }
     
-}
+    private void SaveGame() throws FileNotFoundException, IOException {
+        String tempSpeed = gameModel.getGameSpeed().toString();
+        String tempZoom = gameModel.getZoomLevel().toString();
+        int tempGen = gameModel.getgeneration();
+        File outfile = new File("User's Saved.txt");
+        FileWriter fw = new FileWriter(outfile);
+        PrintWriter pw = new PrintWriter(outfile);
+        
+        pw.println(tempSpeed);
+        pw.println(tempZoom);
+        pw.println(tempGen);
+        for (int i = 0; i < gameModel.getCellGrid().length; i++) {
+            for (int j = 0; j < gameModel.getCellGrid()[i].length; j++) {
+                if (gameModel.getAliveStatusAt(i, j))
+                    pw.print(i+","+j+" ");
+                }
+            }
+      pw.close();    
+    }
+    
+    private void LoadGame(String filename) throws FileNotFoundException{
+        File file = new File(filename+".txt");
+        Scanner sc = new Scanner(file);
+ 
+       gameModel.setGameSpeed(GameSpeed.valueOf(sc.next()));
+       gameModel.setZoomLevel(ZoomLevel.valueOf(sc.next()));
+       gameModel.setgeneration(sc.nextInt());
 
+       while (sc.hasNext()) {
+            String parts[] = sc.next().split(",");
+           gameModel.setAliveStatusAt(Integer.parseInt(parts[0]), Integer.parseInt(parts[1]), true);
+        }
+       updateGridViewDisplay();
+       sc.close();
+        
+    }
+   
+    
+    
+}
+        
+      
+        
+     
 
 
 
