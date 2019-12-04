@@ -62,6 +62,7 @@ public class GameController {
         JMenuItem load = new JMenuItem("Load");
         JMenuItem save = new JMenuItem("Save"); 
         popup.add(save);
+        popup.add(load);
         
         gridView.addMouseListener(new MouseAdapter() {
           public void mouseReleased(MouseEvent me){
@@ -293,6 +294,7 @@ public class GameController {
             @Override
             public void actionPerformed(ActionEvent e) {        
                 //Flip Automatic Mode in model
+                gameModel.setIsAutomaticMode(!gameModel.getIsAutomaticMode());
                 StopTime();
                 
                 //Change based on new Mode setting
@@ -311,9 +313,10 @@ public class GameController {
             @Override
             public void actionPerformed(ActionEvent ae) {
             
-            gameModel.setIsAutomaticMode(false);
-            panel.updateViewForAutomaticMode(false);
             gameModel.Reset();
+            panel.Reset();
+            StopTime();
+            
             
             String selectedShape = (String) ((JComboBox) ae.getSource()).getSelectedItem();
        
@@ -338,8 +341,7 @@ public class GameController {
             public void actionPerformed(ActionEvent e) {
                 String selectedOption = (String) ((JComboBox) e.getSource()).getSelectedItem();
                 //Stop the timer before making chnages
-                if(gameSpeedTimer != null)
-                    gameSpeedTimer.stop();
+                StopTime();
                 
                 if (selectedOption.equals("Slow")){
                     gameModel.setGameSpeed(GameSpeed.SLOW);
@@ -379,7 +381,6 @@ public class GameController {
     
     private void StopTime(){
         
-        gameModel.setIsAutomaticMode(!gameModel.getIsAutomaticMode());
                 
                 //Always stop existing timer before making changes
                 if (gameSpeedTimer != null){

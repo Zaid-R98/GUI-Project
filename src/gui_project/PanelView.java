@@ -103,6 +103,7 @@ public class PanelView extends JPanel{
         setGenLabel(0);
        speed.setSelectedItem("Normal");
        zoom.setSelectedItem("Medium");
+        updateViewForAutomaticMode(false);
     }
     
     public void addShapeComboBoxListener(ActionListener ShapeAction){
