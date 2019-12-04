@@ -424,6 +424,8 @@ public class GameController {
        gameModel.setGameSpeed(GameSpeed.valueOf(sc.next()));
        gameModel.setZoomLevel(ZoomLevel.valueOf(sc.next()));
        gameModel.setgeneration(sc.nextInt());
+       gameModel.setTopLeftCellVisible(new Point(GameModel.TOTAL_GRID_SIZE / 3, GameModel.TOTAL_GRID_SIZE / 3));
+
 
        while (sc.hasNext()) {
             String parts[] = sc.next().split(",");
