@@ -257,8 +257,7 @@ public class GameController {
             @Override
             public void actionPerformed(ActionEvent e)
             {
-                performOneCellGeneration();
-                updateGridViewDisplay();
+                startOneGenerationThread();
             }
         });
         
@@ -378,8 +377,7 @@ public class GameController {
                 new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                performOneCellGeneration();
-                updateGridViewDisplay();
+                startOneGenerationThread();
             }
         });
         gameSpeedTimer.start();
@@ -420,6 +418,18 @@ public class GameController {
        updateGridViewDisplay();
        sc.close();
         
+    }
+    
+    private void startOneGenerationThread(){
+        new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        synchronized (gameModel){
+                            performOneCellGeneration();
+                            updateGridViewDisplay();
+                        }
+                    }
+                }).start();
     }
    
     
