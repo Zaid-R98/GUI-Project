@@ -24,7 +24,6 @@ import javax.swing.JPopupMenu;
  */
 public class PanelView extends JPanel{
     
-      private final JButton Clear;
       private final JButton Next;
       private final JButton Start;
       private final JComboBox shape;
@@ -44,12 +43,10 @@ public class PanelView extends JPanel{
         
         setBackground(Color.LIGHT_GRAY);
         
-        String[] Shapes = {"Glider", "R-Pentomino","Small Exploder", "Small spaceship", "Tumbler", "User's Saved"};
+        String[] Shapes = {"Clear", "Glider", "R-Pentomino","Small Exploder", "Small spaceship", "Tumbler"};
         shape = new JComboBox(Shapes);
         add(shape);
         
-        Clear = new JButton("Clear");
-        add(Clear);
         
         Next = new JButton("Next");
         add(Next);
@@ -101,13 +98,15 @@ public class PanelView extends JPanel{
     { 
         generation.setText("Generation: "+ gen);
     }
+    public void Reset()
+    { 
+        setGenLabel(0);
+       speed.setSelectedItem("Normal");
+       zoom.setSelectedItem("Medium");
+    }
     
     public void addShapeComboBoxListener(ActionListener ShapeAction){
         shape.addActionListener(ShapeAction);
-    }
-    
-    public void addClearButtonListener(ActionListener ClearAction){ 
-        Clear.addActionListener(ClearAction);
     }
     
     public void addNextButtonListener(ActionListener NextAction){
