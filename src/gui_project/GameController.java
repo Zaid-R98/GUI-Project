@@ -59,8 +59,10 @@ public class GameController {
         
         //pop up menu for right click
         popup = new JPopupMenu();
-        JMenuItem save = new JMenuItem("Save");
+        JMenuItem load = new JMenuItem("Load");
+        JMenuItem save = new JMenuItem("Save"); 
         popup.add(save);
+        popup.add(load);
         
         gridView.addMouseListener(new MouseAdapter() {
           public void mouseReleased(MouseEvent me){
@@ -74,12 +76,26 @@ public class GameController {
             @Override
             public void actionPerformed(ActionEvent ae) {
                 try {
+                   //have to add code to pause before saving 
+                   StopTime();
                     SaveGame();
                 } catch (IOException ex) {
                     Logger.getLogger(GameController.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
 
+        });
+        
+        load.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                try {
+                    StopTime();
+                    LoadGame("User's Saved");
+                } catch (FileNotFoundException ex) {
+                    Logger.getLogger(GameController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
         });
     }
     
@@ -245,14 +261,6 @@ public class GameController {
     
     private void initializePanelViewListeners(){
         
-        panel.addClearButtonListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent ae) {
-               gameModel.Reset();
-               gameModel.setIsAutomaticMode(false);
-               updateGridViewDisplay();
-            }
-        });
         panel.addNextButtonListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e)
@@ -286,11 +294,7 @@ public class GameController {
             public void actionPerformed(ActionEvent e) {        
                 //Flip Automatic Mode in model
                 gameModel.setIsAutomaticMode(!gameModel.getIsAutomaticMode());
-                
-                //Always stop existing timer before making changes
-                if (gameSpeedTimer != null){
-                    gameSpeedTimer.stop();
-                }
+                StopTime();
                 
                 //Change based on new Mode setting
                 if (gameModel.getIsAutomaticMode()){  
@@ -308,14 +312,19 @@ public class GameController {
             @Override
             public void actionPerformed(ActionEvent ae) {
             
-            gameModel.setIsAutomaticMode(false);
             gameModel.Reset();
+            panel.Reset();
+            StopTime();
+            
             
             String selectedShape = (String) ((JComboBox) ae.getSource()).getSelectedItem();
        
             String Shape;
                Shape = selectedShape.toString();
-               
+               if(Shape == "Clear")
+               {gameModel.Reset();
+               panel.Reset();}
+               else
                 try {
                     //Have function to load this shape
                     LoadGame(Shape);
@@ -331,8 +340,7 @@ public class GameController {
             public void actionPerformed(ActionEvent e) {
                 String selectedOption = (String) ((JComboBox) e.getSource()).getSelectedItem();
                 //Stop the timer before making chnages
-                if(gameSpeedTimer != null)
-                    gameSpeedTimer.stop();
+                StopTime();
                 
                 if (selectedOption.equals("Slow")){
                     gameModel.setGameSpeed(GameSpeed.SLOW);
@@ -370,7 +378,13 @@ public class GameController {
     }
     
     
-    
+    private void StopTime(){
+        
+                
+                //Always stop existing timer before making changes
+                if (gameSpeedTimer != null){
+                    gameSpeedTimer.stop();
+                }}
     
     private void setupTimerForAutomaticMode(){
         gameSpeedTimer = new Timer(gameModel.getNumericDelayOfGameSpeed(),
