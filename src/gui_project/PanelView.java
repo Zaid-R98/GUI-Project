@@ -74,6 +74,7 @@ public class PanelView extends JPanel{
         checkboxPanel.setBackground(Color.LIGHT_GRAY);
         checkboxPanel.setBorder(BorderFactory.createTitledBorder("Edit Mode"));
         Enable= new JCheckBox("Enable");
+        Enable.setSelected(true);
         checkboxPanel.add(Enable);
         add(checkboxPanel);
     }

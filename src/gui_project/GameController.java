@@ -43,7 +43,7 @@ public class GameController {
     private Timer gameSpeedTimer = null;
     private Point stored = null;
     private JPopupMenu popup;
-    private boolean check;//stores the state of the checkbox - Zaid
+    
     public GameController(GameModel gameModel, GridView gridView, PanelView panel) {
         this.gameModel = gameModel;
         this.gridView = gridView;
@@ -105,15 +105,7 @@ public class GameController {
         });
     }
     
-    public void setcheck(boolean setcheck)//true if enabled checkbox is checked.- Zaid
-    {
-        check=setcheck;
-    }
     
-    public boolean getcheckstatus()//tells the controler if the jcheckbox is checked or not.- Zaid
-    {
-        return check;
-    }
     private void updateGridViewDisplay(){
         int gridViewWidth = gridView.getWidth();
         int gridViewHeight = gridView.getHeight();
@@ -178,7 +170,7 @@ public class GameController {
         gridView.addGridClickingListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                if(getcheckstatus()){//checks whether the JcheckBox is enabled or disabled- Zaid
+                if(gameModel.getcheckstatus()){//checks whether the JcheckBox is enabled or disabled- Zaid
                 for (int i = 0; i < gridView.getPortionOfCellsVisible().length; ++i) {
                     for (int j = 0; j < gridView.getPortionOfCellsVisible()[i].length; ++j) { 
                         //Find and set color of cell
@@ -300,13 +292,13 @@ public class GameController {
 
             @Override
             public void itemStateChanged(ItemEvent e) {
-                if(e.getStateChange()==1)
+                if(e.getStateChange()==  1)
                 {
-                    setcheck(true);//updates to check whether to enable mouseclicks or not.
+                    gameModel.setEnabledMode(true);//updates to check whether to enable mouseclicks or not.
                 }
                 else
                 {
-                    setcheck(false);
+                    gameModel.setEnabledMode(false);
                 }
                 
             }

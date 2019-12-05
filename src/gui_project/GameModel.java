@@ -14,7 +14,7 @@ import java.awt.geom.Rectangle2D;
  */
 public class GameModel {
 
-    static final int TOTAL_GRID_SIZE = 50;
+    static final int TOTAL_GRID_SIZE = 400;
     
     //Full game grid
     private Cell[][] cellGrid = new Cell[TOTAL_GRID_SIZE][TOTAL_GRID_SIZE];
@@ -24,6 +24,7 @@ public class GameModel {
     private int generation=0;
     private boolean isAutomaticMode = false;
     private GameSpeed gameSpeed = GameSpeed.NORMAL;
+    private boolean check = true;//stores the state of the checkbox - Zaid
 
    
     public GameModel(){
@@ -217,6 +218,16 @@ public class GameModel {
                 //if LARGE
                 return 30;
         }
+    }
+    
+    public void setEnabledMode(boolean setcheck)//true if enabled checkbox is checked.- Zaid
+    {
+        check=setcheck;
+    }
+    
+    public boolean getcheckstatus()//tells the controler if the jcheckbox is checked or not.- Zaid
+    {
+        return check;
     }
 }
 
