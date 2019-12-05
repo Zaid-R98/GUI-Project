@@ -218,5 +218,5 @@ enum GameSpeed{
 }
 
 enum ZoomLevel{
-    SMALL, MEDIUM, BIG
+    SMALL, MEDIUM, LARGE
 }

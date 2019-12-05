@@ -76,8 +76,10 @@ public class GameController {
             @Override
             public void actionPerformed(ActionEvent ae) {
                 try {
-                   //have to add code to pause before saving 
+                   //have to add code to pause before saving
                    StopTime();
+                   gameModel.setIsAutomaticMode(false);
+                   panel.updateViewForAutomaticMode(false);
                     SaveGame();
                 } catch (IOException ex) {
                     Logger.getLogger(GameController.class.getName()).log(Level.SEVERE, null, ex);
@@ -91,6 +93,8 @@ public class GameController {
             public void actionPerformed(ActionEvent ae) {
                 try {
                     StopTime();
+                    gameModel.setIsAutomaticMode(false);
+                    panel.updateViewForAutomaticMode(false);
                     LoadGame("User's Saved");
                 } catch (FileNotFoundException ex) {
                     Logger.getLogger(GameController.class.getName()).log(Level.SEVERE, null, ex);
@@ -316,7 +320,7 @@ public class GameController {
             gameModel.Reset();
             panel.Reset();
             StopTime();
-            
+            gameModel.setIsAutomaticMode(false);
             
             String selectedShape = (String) ((JComboBox) ae.getSource()).getSelectedItem();
        
@@ -324,7 +328,7 @@ public class GameController {
                Shape = selectedShape.toString();
                if(Shape == "Clear")
                {gameModel.Reset();
-               panel.Reset();}
+                panel.Reset();}
                else
                 try {
                     //Have function to load this shape
@@ -370,7 +374,7 @@ public class GameController {
                     gameModel.setZoomLevel(ZoomLevel.MEDIUM);
                 }
                 else{
-                    gameModel.setZoomLevel(ZoomLevel.BIG);
+                    gameModel.setZoomLevel(ZoomLevel.LARGE);
                 }
                 updateGridViewDisplay();
             }
@@ -422,10 +426,18 @@ public class GameController {
     private void LoadGame(String filename) throws FileNotFoundException{
         File file = new File(filename+".txt");
         Scanner sc = new Scanner(file);
+        
+        
  
        gameModel.setGameSpeed(GameSpeed.valueOf(sc.next()));
        gameModel.setZoomLevel(ZoomLevel.valueOf(sc.next()));
        gameModel.setgeneration(sc.nextInt());
+       
+       
+       
+         panel.setGenLabel(gameModel.getgeneration());
+         panel.setSpeedCombo(gameModel.getGameSpeed().name());
+         panel.setZoomCombo(gameModel.getZoomLevel().name());
 
        while (sc.hasNext()) {
             String parts[] = sc.next().split(",");

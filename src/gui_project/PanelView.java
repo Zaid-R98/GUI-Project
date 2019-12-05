@@ -30,20 +30,18 @@ public class PanelView extends JPanel{
       private final JComboBox speed;
       private final JComboBox zoom;
       private final JLabel generation;
-      private int gen;
       private final JPanel checkboxPanel;//Added Panel to store the CheckBox- Zaid
       private final JCheckBox Enable;
     
-      public  void setGen(int currentgen) 
-      {
-          this.gen = currentgen;
-      }
       
+      String[] Shapes = {"Clear", "Glider", "R-Pentomino","Small Exploder", "Small spaceship", "Tumbler"};
+      String[] Speeds = {"Slow", "Normal", "Fast"};
+      String[] zoomLevels = {"Small", "Medium", "Large"};
     public PanelView(){
         
         setBackground(Color.LIGHT_GRAY);
         
-        String[] Shapes = {"Clear", "Glider", "R-Pentomino","Small Exploder", "Small spaceship", "Tumbler"};
+        
         shape = new JComboBox(Shapes);
         add(shape);
         
@@ -54,13 +52,13 @@ public class PanelView extends JPanel{
         Start = new JButton("Start");
         add(Start);
         
-        String[] Speeds = {"Slow", "Normal", "Fast"};
+       
         speed = new JComboBox(Speeds);
         speed.setEditable(false);
         speed.setSelectedItem("Normal");
         add(speed);
         
-        String[] zoomLevels = {"Small", "Medium", "Large"};
+        
         zoom = new JComboBox(zoomLevels);
         zoom.setEditable(false);
         zoom.setSelectedItem("Medium");
@@ -98,11 +96,29 @@ public class PanelView extends JPanel{
     { 
         generation.setText("Generation: "+ gen);
     }
+    
+     public void setSpeedCombo(String Speed)
+    { 
+        for (int i = 0; i < Speeds.length; i++) {
+            if (Speed.toLowerCase().equals(Speeds[i].toLowerCase())) {
+                speed.setSelectedIndex(i);
+            }
+        }
+    }
+     
+      public void setZoomCombo(String Zoom)
+    { 
+         for (int i = 0; i < zoomLevels.length; i++) {
+            if (Zoom.toLowerCase().equals(zoomLevels[i].toLowerCase())) {
+                zoom.setSelectedIndex(i);
+            }
+        }
+    }
     public void Reset()
     { 
         setGenLabel(0);
-       speed.setSelectedItem("Normal");
-       zoom.setSelectedItem("Medium");
+        setSpeedCombo("Normal");
+        setZoomCombo("Medium");
         updateViewForAutomaticMode(false);
     }
     
