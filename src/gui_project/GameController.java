@@ -243,10 +243,16 @@ public class GameController {
                 int y_diff = e.getY() - stored.y;
                 int currentCellWidth = gameModel.getCurrentCellWidthFromZoomLevel();
                 
-                if(Math.abs(y_diff) >= currentCellWidth)
-                    gameModel.getTopLeftCellVisible().x += (y_diff < 0)? 1:-1;
-                if(Math.abs(x_diff) >= currentCellWidth)
-                    gameModel.getTopLeftCellVisible().y += (x_diff < 0)? 1:-1;
+                int newTopLeft_X = gameModel.getTopLeftCellVisible().x + ((y_diff < 0)? 1:-1);
+                int newTopLeft_Y = gameModel.getTopLeftCellVisible().y + ((x_diff < 0)? 1:-1);
+                
+                int gridEnd_Row = gameModel.getCellGrid().length - gridView.getPortionOfCellsVisible().length;
+                int gridEnd_Col = gameModel.getCellGrid()[0].length - gridView.getPortionOfCellsVisible()[0].length;
+                //after the end, if you try changing cell size, it messes up
+                if(Math.abs(y_diff) >= currentCellWidth && newTopLeft_X > 0 && newTopLeft_X < gridEnd_Row)
+                    gameModel.getTopLeftCellVisible().x = newTopLeft_X;
+                if(Math.abs(x_diff) >= currentCellWidth && newTopLeft_Y > 0 && newTopLeft_Y < gridEnd_Col)
+                    gameModel.getTopLeftCellVisible().y = newTopLeft_Y;
                 
                 updateGridViewDisplay();
                 
