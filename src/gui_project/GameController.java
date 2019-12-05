@@ -430,17 +430,14 @@ public class GameController {
        gameModel.setGameSpeed(GameSpeed.valueOf(sc.next()));
        gameModel.setZoomLevel(ZoomLevel.valueOf(sc.next()));
        gameModel.setgeneration(sc.nextInt());
-<<<<<<< HEAD
-       
+
        
        
          panel.setGenLabel(gameModel.getgeneration());
          panel.setSpeedCombo(gameModel.getGameSpeed().name());
          panel.setZoomCombo(gameModel.getZoomLevel().name());
-=======
-       gameModel.setTopLeftCellVisible(new Point(GameModel.TOTAL_GRID_SIZE / 3, GameModel.TOTAL_GRID_SIZE / 3));
 
->>>>>>> c24fb0d7d2df5ce233c0ae24fb5d6ea61d23a55f
+       gameModel.setTopLeftCellVisible(new Point(GameModel.TOTAL_GRID_SIZE / 3, GameModel.TOTAL_GRID_SIZE / 3));
 
        while (sc.hasNext()) {
             String parts[] = sc.next().split(",");
