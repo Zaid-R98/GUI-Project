@@ -95,6 +95,8 @@ public class GameController {
                     StopTime();
                     gameModel.setIsAutomaticMode(false);
                     panel.updateViewForAutomaticMode(false);
+                    gameModel.Reset();
+                    panel.Reset();
                     LoadGame("User's Saved");
                 } catch (FileNotFoundException ex) {
                     Logger.getLogger(GameController.class.getName()).log(Level.SEVERE, null, ex);
