@@ -14,7 +14,7 @@ import java.awt.geom.Rectangle2D;
  */
 public class GameModel {
 
-    static final int TOTAL_GRID_SIZE = 400;
+    static final int TOTAL_GRID_SIZE = 50;
     
     //Full game grid
     private Cell[][] cellGrid = new Cell[TOTAL_GRID_SIZE][TOTAL_GRID_SIZE];
@@ -87,6 +87,13 @@ public class GameModel {
     public void setIsAutomaticMode(boolean isAutomaticMode) {
         this.isAutomaticMode = isAutomaticMode;
     
+    }
+    
+    public int getNumOfRows(){
+        return cellGrid.length;
+    }
+    public int getNumOfCols() {
+        return cellGrid[0].length;
     }
     
     public void Reset(){

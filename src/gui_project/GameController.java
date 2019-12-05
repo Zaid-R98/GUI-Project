@@ -123,6 +123,17 @@ public class GameController {
         int numOfCellsColumns = gridViewWidth /currentCellWidth;
         int numOfCellsRows = gridViewHeight / currentCellWidth;
         
+        int numOfAvailableRows = gameModel.getNumOfRows() - gameModel.getTopLeftCellVisible().x;
+        int numOfAvailableColumns = gameModel.getNumOfCols()- gameModel.getTopLeftCellVisible().y;
+
+        //If there are more cells demanded than are available, only load those available
+        if (numOfCellsRows > numOfAvailableRows){
+            numOfCellsRows = numOfAvailableRows;
+        }
+        if (numOfCellsColumns > numOfAvailableColumns) {
+            numOfCellsColumns = numOfAvailableColumns;
+        }
+        
         Cell[][] portionOfCellsVisible = new Cell[numOfCellsRows][numOfCellsColumns];
         
         //Initialize visible portion
@@ -246,12 +257,14 @@ public class GameController {
                 int newTopLeft_X = gameModel.getTopLeftCellVisible().x + ((y_diff < 0)? 1:-1);
                 int newTopLeft_Y = gameModel.getTopLeftCellVisible().y + ((x_diff < 0)? 1:-1);
                 
-                int gridEnd_Row = gameModel.getCellGrid().length - gridView.getPortionOfCellsVisible().length;
-                int gridEnd_Col = gameModel.getCellGrid()[0].length - gridView.getPortionOfCellsVisible()[0].length;
+              //  int gridEnd_Row = gameModel.getCellGrid().length - gridView.getPortionOfCellsVisible().length;
+              //  int gridEnd_Col = gameModel.getCellGrid()[0].length - gridView.getPortionOfCellsVisible()[0].length;
+                
+                
                 //after the end, if you try changing cell size, it messes up
-                if(Math.abs(y_diff) >= currentCellWidth && newTopLeft_X > 0 && newTopLeft_X < gridEnd_Row)
+                if(Math.abs(y_diff) >= currentCellWidth && newTopLeft_X > 0 && newTopLeft_X < gameModel.getNumOfRows())
                     gameModel.getTopLeftCellVisible().x = newTopLeft_X;
-                if(Math.abs(x_diff) >= currentCellWidth && newTopLeft_Y > 0 && newTopLeft_Y < gridEnd_Col)
+                if(Math.abs(x_diff) >= currentCellWidth && newTopLeft_Y > 0 && newTopLeft_Y < gameModel.getNumOfCols())
                     gameModel.getTopLeftCellVisible().y = newTopLeft_Y;
                 
                 updateGridViewDisplay();
