@@ -97,7 +97,7 @@ public class GameModel {
         return cellGrid[0].length;
     }
     
-    public void Reset(){
+    public void reset(){
         setgeneration(0);
         setZoomLevel(zoomLevel.MEDIUM);
         setGameSpeed(gameSpeed.NORMAL);

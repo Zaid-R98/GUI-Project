@@ -24,36 +24,36 @@ import javax.swing.JPopupMenu;
  */
 public class PanelView extends JPanel{
     
-      private final JButton Next;
-      private final JButton Start;
+      private final JButton next;
+      private final JButton start;
       private final JComboBox shape;
       private final JComboBox speed;
       private final JComboBox zoom;
       private final JLabel generation;
       private final JPanel checkboxPanel;//Added Panel to store the CheckBox- Zaid
-      private final JCheckBox Enable;
+      private final JCheckBox enable;
     
       
-      String[] Shapes = {"Clear", "Glider", "R-Pentomino","Small Exploder", "Small spaceship", "Tumbler"};
-      String[] Speeds = {"Slow", "Normal", "Fast"};
+      String[] shapes = {"Clear", "Glider", "R-Pentomino","Small Exploder", "Small spaceship", "Tumbler"};
+      String[] speeds = {"Slow", "Normal", "Fast"};
       String[] zoomLevels = {"Small", "Medium", "Large"};
     public PanelView(){
         
         setBackground(Color.LIGHT_GRAY);
         
         
-        shape = new JComboBox(Shapes);
+        shape = new JComboBox(shapes);
         add(shape);
         
         
-        Next = new JButton("Next");
-        add(Next);
+        next = new JButton("Next");
+        add(next);
         
-        Start = new JButton("Start");
-        add(Start);
+        start = new JButton("Start");
+        add(start);
         
        
-        speed = new JComboBox(Speeds);
+        speed = new JComboBox(speeds);
         speed.setEditable(false);
         speed.setSelectedItem("Normal");
         add(speed);
@@ -73,23 +73,23 @@ public class PanelView extends JPanel{
         checkboxPanel=new JPanel();
         checkboxPanel.setBackground(Color.LIGHT_GRAY);
         checkboxPanel.setBorder(BorderFactory.createTitledBorder("Edit Mode"));
-        Enable= new JCheckBox("Enable");
-        Enable.setSelected(true);
-        checkboxPanel.add(Enable);
+        enable= new JCheckBox("Enable");
+        enable.setSelected(true);
+        checkboxPanel.add(enable);
         add(checkboxPanel);
     }
     
     public void updateViewForAutomaticMode(boolean isAutomaticMode){
         if (isAutomaticMode){
-            Next.setEnabled(false);
-            Start.setText("Stop");
-            Enable.setSelected(false);//CheckBox disables in automatic mode- Zaid
-            Enable.setEnabled(false);
+            next.setEnabled(false);
+            start.setText("Stop");
+            enable.setSelected(false);//CheckBox disables in automatic mode- Zaid
+            enable.setEnabled(false);
         }
         else{
-            Next.setEnabled(true);//Revert changes once automatic mode is done - Zaid
-            Enable.setEnabled(true);
-            Start.setText("Start");
+            next.setEnabled(true);//Revert changes once automatic mode is done - Zaid
+            enable.setEnabled(true);
+            start.setText("Start");
         }
     }
     
@@ -98,24 +98,24 @@ public class PanelView extends JPanel{
         generation.setText("Generation: "+ gen);
     }
     
-     public void setSpeedCombo(String Speed)
+     public void setSpeedCombo(String inpSpeed)
     { 
-        for (int i = 0; i < Speeds.length; i++) {
-            if (Speed.toLowerCase().equals(Speeds[i].toLowerCase())) {
+        for (int i = 0; i < speeds.length; i++) {
+            if (inpSpeed.toLowerCase().equals(speeds[i].toLowerCase())) {
                 speed.setSelectedIndex(i);
             }
         }
     }
      
-      public void setZoomCombo(String Zoom)
+      public void setZoomCombo(String inpZoom)
     { 
          for (int i = 0; i < zoomLevels.length; i++) {
-            if (Zoom.toLowerCase().equals(zoomLevels[i].toLowerCase())) {
+            if (inpZoom.toLowerCase().equals(zoomLevels[i].toLowerCase())) {
                 zoom.setSelectedIndex(i);
             }
         }
     }
-    public void Reset()
+    public void reset()
     { 
         setGenLabel(0);
         setSpeedCombo("Normal");
@@ -128,11 +128,11 @@ public class PanelView extends JPanel{
     }
     
     public void addNextButtonListener(ActionListener NextAction){
-        Next.addActionListener(NextAction);
+        next.addActionListener(NextAction);
     }
     
     public void addStartButtonListener(ActionListener StartAction){
-        Start.addActionListener(StartAction);
+        start.addActionListener(StartAction);
     }
     
     public void addSpeedComboBoxListener(ActionListener SpeedAction){
@@ -145,6 +145,6 @@ public class PanelView extends JPanel{
     
     public void addEnableItemListener(ItemListener listener)//adding the item listener to the JCheckBox- Zaid
     {
-        Enable.addItemListener(listener);
+        enable.addItemListener(listener);
     }
 }

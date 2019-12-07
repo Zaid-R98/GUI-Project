@@ -77,10 +77,10 @@ public class GameController {
             public void actionPerformed(ActionEvent ae) {
                 try {
                    //have to add code to pause before saving
-                   StopTime();
+                   stopTime();
                    gameModel.setIsAutomaticMode(false);
                    panel.updateViewForAutomaticMode(false);
-                    SaveGame();
+                    saveGame();
                 } catch (IOException ex) {
                     Logger.getLogger(GameController.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -92,12 +92,12 @@ public class GameController {
             @Override
             public void actionPerformed(ActionEvent ae) {
                 try {
-                    StopTime();
+                    stopTime();
                     gameModel.setIsAutomaticMode(false);
                     panel.updateViewForAutomaticMode(false);
-                    gameModel.Reset();
-                    panel.Reset();
-                    LoadGame("User's Saved");
+                    gameModel.reset();
+                    panel.reset();
+                    loadGame("User's Saved");
                 } catch (FileNotFoundException ex) {
                     Logger.getLogger(GameController.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -311,7 +311,7 @@ public class GameController {
             public void actionPerformed(ActionEvent e) {        
                 //Flip Automatic Mode in model
                 gameModel.setIsAutomaticMode(!gameModel.getIsAutomaticMode());
-                StopTime();
+                stopTime();
                 
                 //Change based on new Mode setting
                 if (gameModel.getIsAutomaticMode()){  
@@ -329,22 +329,22 @@ public class GameController {
             @Override
             public void actionPerformed(ActionEvent ae) {
             
-            gameModel.Reset();
-            panel.Reset();
-            StopTime();
+            gameModel.reset();
+            panel.reset();
+            stopTime();
             gameModel.setIsAutomaticMode(false);
             
             String selectedShape = (String) ((JComboBox) ae.getSource()).getSelectedItem();
        
-            String Shape;
-               Shape = selectedShape.toString();
-               if(Shape == "Clear")
-               {gameModel.Reset();
-                panel.Reset();}
+            String shape;
+               shape = selectedShape.toString();
+               if(shape == "Clear")
+               {gameModel.reset();
+                panel.reset();}
                else
                 try {
                     //Have function to load this shape
-                    LoadGame(Shape);
+                    loadGame(shape);
                 } catch (FileNotFoundException ex) {
                     Logger.getLogger(GameController.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -357,7 +357,7 @@ public class GameController {
             public void actionPerformed(ActionEvent e) {
                 String selectedOption = (String) ((JComboBox) e.getSource()).getSelectedItem();
                 //Stop the timer before making chnages
-                StopTime();
+                stopTime();
                 
                 if (selectedOption.equals("Slow")){
                     gameModel.setGameSpeed(GameSpeed.SLOW);
@@ -395,7 +395,7 @@ public class GameController {
     }
     
     
-    private void StopTime(){
+    private void stopTime(){
         
                 
                 //Always stop existing timer before making changes
@@ -414,7 +414,7 @@ public class GameController {
         gameSpeedTimer.start();
     }
     
-    private void SaveGame() throws FileNotFoundException, IOException {
+    private void saveGame() throws FileNotFoundException, IOException {
         String tempSpeed = gameModel.getGameSpeed().toString();
         String tempZoom = gameModel.getZoomLevel().toString();
         int tempGen = gameModel.getgeneration();
@@ -434,7 +434,7 @@ public class GameController {
       pw.close();    
     }
     
-    private void LoadGame(String filename) throws FileNotFoundException{
+    private void loadGame(String filename) throws FileNotFoundException{
         File file = new File(filename+".txt");
         Scanner sc = new Scanner(file);
         
@@ -452,8 +452,8 @@ public class GameController {
 
        gameModel.setTopLeftCellVisible(new Point(GameModel.TOTAL_GRID_SIZE / 3, GameModel.TOTAL_GRID_SIZE / 3));
 
-       int height = gridView.NoOfCellAlongY();
-       int width = gridView.NoOfCellAlongX();
+       int height = gridView.noOfCellAlongY();
+       int width = gridView.noOfCellAlongX();
        
        if(filename == "User's Saved"){height = 0; width = 0;}
        
