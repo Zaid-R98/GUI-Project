@@ -77,4 +77,13 @@ public class GridView extends JComponent{
         return portionOfCellsVisible;
     }    
     
+    public int NoOfCellAlongX()
+    {System.out.println(portionOfCellsVisible.length);
+        return portionOfCellsVisible.length;
+    }
+    
+    public int NoOfCellAlongY()
+    { System.out.println(portionOfCellsVisible[0].length);
+        return portionOfCellsVisible[0].length;}
+    
 }

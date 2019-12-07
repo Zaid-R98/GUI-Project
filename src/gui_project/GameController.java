@@ -452,9 +452,14 @@ public class GameController {
 
        gameModel.setTopLeftCellVisible(new Point(GameModel.TOTAL_GRID_SIZE / 3, GameModel.TOTAL_GRID_SIZE / 3));
 
+       int height = gridView.NoOfCellAlongY();
+       int width = gridView.NoOfCellAlongX();
+       
+       if(filename == "User's Saved"){height = 0; width = 0;}
+       
        while (sc.hasNext()) {
             String parts[] = sc.next().split(",");
-           gameModel.setAliveStatusAt(Integer.parseInt(parts[0]), Integer.parseInt(parts[1]), true);
+           gameModel.setAliveStatusAt(Integer.parseInt(parts[0])+(width/2), Integer.parseInt(parts[1])+(height/2), true);
         }
        updateGridViewDisplay();
        sc.close();
