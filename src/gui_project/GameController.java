@@ -63,7 +63,7 @@ public class GameController {
         JMenuItem save = new JMenuItem("Save"); 
         popup.add(save);
         popup.add(load);
-        
+                
         gridView.addMouseListener(new MouseAdapter() {
           public void mouseReleased(MouseEvent me){
                  //for right click pop up menu
