@@ -20,6 +20,7 @@ There are a group of controls that allow users to control the game. The followin
 * <b>Play:</b> causes the Life simulation to advance automatically, disables the next and changes
 * <b>Speed:</b> user can change the speed of the automation
 * <b>Scale:</b> user can zoom in and out to display a smaller or larger grid
+* <b>Edit:</b> user can select individual cells to toggle it between yellow and grey
 
 ## Technologies Used
 Project is created with:
