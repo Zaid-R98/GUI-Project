@@ -1,4 +1,4 @@
-## Game of Life
+# Game of Life
 For our GUI course project we implemented our own version of mathematician John Horton Conway's 'The Game of Life', it is a cellular automation built using JAVA swing library and the model-view-controller(MVC) software design pattern.
 
 
@@ -8,7 +8,9 @@ For our GUI course project we implemented our own version of mathematician John 
 * [Images](#images)
 
 ## Description
-Our version of the Game of Life sports a GUI shown below. 
+Our version of the Game of Life sports a GUI shown below.
+
+![sample](https://user-images.githubusercontent.com/50911194/88464928-a8934f80-cecf-11ea-8739-e7ee4e5e604f.PNG)
 
 The yellow cells represent a live cell while grey is dead. 
 There are a group of controls that allow users to control the game. The following are the functions of each control.
@@ -25,3 +27,10 @@ Project is created with:
 * jawa swing library
 
 ## Images
+
+![first](https://user-images.githubusercontent.com/50911194/88464927-a8934f80-cecf-11ea-997c-931f2d49439b.PNG)
+
+![second](https://user-images.githubusercontent.com/50911194/88464922-a7622280-cecf-11ea-852b-3b6f10fbaf9c.PNG)
+
+
+
